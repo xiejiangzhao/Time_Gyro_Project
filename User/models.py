@@ -1,8 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
+# Create your models here.
+from django.db import models
 
-class User(AbstractUser):
+class User(models.Model):
     nick_name = models.CharField(max_length=32,
                                  blank=True,
                                  verbose_name="nick_name",
@@ -28,6 +29,3 @@ class User(AbstractUser):
                                  help_text="user's gender, True is Male, False is Female, default is True.")
     birthday = models.DateField(verbose_name="birthday",
                                 help_text="user's birthday, must be YYYY-MM-DD")
-
-    class Meta(AbstractUser.Meta):
-        pass
