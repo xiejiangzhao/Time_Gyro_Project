@@ -23,10 +23,10 @@ def userlogin(request):
             user.save()
             # login
             login(request, user)
-            # redirect to homepage
-            return HttpResponseRedirect(reverse('users:index'))
+            # redirect to the first page of schedule list
+            return HttpResponseRedirect(reverse('schedule:schedule_list'), args=[1])
     
-    return render(request,'users/login.html',{'form':form})
+    return render(request,'user/login.html',{'form':form})
 
 def register(request):
     if request.method != 'POST':
@@ -42,16 +42,16 @@ def register(request):
             authenticated_user = authenticate(username=new_user.username,
                     password=request.POST['password1'])
             login(request, authenticated_user)
-            return HttpResponseRedirect(reverse('users:index'))
+            return HttpResponseRedirect(reverse('schedule:schedule_list'), args=[1])
 
     context = {'form': form}
-    return render(request, 'users/register.html', context)
+    return render(request, 'user/register.html', context)
 
 
 def logout_view(request):
     """user log out"""
     logout(request)
-    return HttpResponseRedirect(reverse('schedule:index'))
+    return HttpResponseRedirect(reverse('user:login'))
 
 
 
