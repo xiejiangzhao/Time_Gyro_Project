@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # my apps
-    'user',
-    'schedule'
+    'User',
+    'Schedule'
 ]
+
+AUTH_USER_MODEL = 'User.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

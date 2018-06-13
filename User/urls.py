@@ -1,9 +1,8 @@
 from django.conf.urls import url
-from . import userlogin
 
 from . import views
 
-app_name = 'user'
+app_name = 'User'
 
 urlpatterns = [
     # 登录页面

@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse
 from django.utils import timezone
 from .models import User
-from learning_logs.forms import UserCreationForm, UserForm
+from User.forms import UserCreationForm, UserForm
 # Create your views here.
 def userlogin(request):
     if request.method != 'POST':
@@ -26,7 +26,7 @@ def userlogin(request):
             # redirect to the first page of schedule list
             return HttpResponseRedirect(reverse('schedule:schedule_list'), args=[1])
     
-    return render(request,'user/login.html',{'form':form})
+    return render(request,'User/login.html',{'form':form})
 
 def register(request):
     if request.method != 'POST':
@@ -45,13 +45,13 @@ def register(request):
             return HttpResponseRedirect(reverse('schedule:schedule_list'), args=[1])
 
     context = {'form': form}
-    return render(request, 'user/register.html', context)
+    return render(request, 'User/register.html', context)
 
 
 def logout_view(request):
     """user log out"""
     logout(request)
-    return HttpResponseRedirect(reverse('user:login'))
+    return HttpResponseRedirect(reverse('User:login'))
 
 
 
