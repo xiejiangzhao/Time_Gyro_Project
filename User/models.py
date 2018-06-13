@@ -8,6 +8,10 @@ class User(models.Model):
                                  blank=True,
                                  verbose_name="nick_name",
                                  help_text="user's nick name, can be not fill in form.")
+    password = models.CharField(max_length=32,
+                                 blank=True,
+                                 verbose_name="password",
+                                 help_text="password")
     date_last_logged_in = models.DateTimeField(null=True,
                                                verbose_name="date_last_logged_in",
                                                help_text="user's last login time, use timezone.now() to fill it.")
