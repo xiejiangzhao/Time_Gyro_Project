@@ -1,7 +1,10 @@
 # coding=utf-8
+from typing import List, Dict
+
 from django.contrib import auth
-from .models import GyroUser
+
 from Schedule.models import *
+
 """
 用户对象包含的内容:
 原生的username,email和扩展的schedule_created_count,schedule_attended_count,notice_count,gender,birthday
@@ -76,7 +79,8 @@ def user_exist(username):
     else:
         return False
 
-def create_Schedule(title,desc,notify_time,start_time,end_time,creator,participator_count,type,user):
+
+def create_schedule(title, desc, notify_time, start_time, end_time, creator, participator_count, type, user):
     """
     一个用户创建一个任务,最后一个你在注释里说明要用户对象还是用户名
     :param title:
@@ -92,7 +96,8 @@ def create_Schedule(title,desc,notify_time,start_time,end_time,creator,participa
     """
     pass
 
-def delete_Schedule(title,desc,notify_time,start_time,end_time,creator,participator_count,type,user):
+
+def delete_schedule(title, desc, notify_time, start_time, end_time, creator, participator_count, type, user):
     """
     用户创始人删除任务,最后一个你在注释里说明要用户对象还是用户名
     :param title:
@@ -107,7 +112,9 @@ def delete_Schedule(title,desc,notify_time,start_time,end_time,creator,participa
     :return:
     """
     pass
-def change_Schedule(title,desc,notify_time,start_time,end_time,creator,participator_count,type,user):
+
+
+def change_schedule(title, desc, notify_time, start_time, end_time, creator, participator_count, type, user):
     """
     用户创始人修改任务,最后一个你在注释里说明要用户对象还是用户名
     :param title:
@@ -121,7 +128,10 @@ def change_Schedule(title,desc,notify_time,start_time,end_time,creator,participa
     :param user:
     :return:
     """
-def attend_Sechedule(title,desc,notify_time,start_time,end_time,creator,participator_count,type,user):
+    pass
+
+
+def attend_sechedule(title, desc, notify_time, start_time, end_time, creator, participator_count, type, user):
     """
     用户参与任务
     :param title:
@@ -135,10 +145,21 @@ def attend_Sechedule(title,desc,notify_time,start_time,end_time,creator,particip
     :param user:
     :return:
     """
-def schetodict(user_sche:list):
+    pass
+
+
+def schedule_list_to_dict(schedule_list: List[Schedule]) -> Dict:
     """
-    :param user_sche:
+    :param schedule_list:
     :return:
     形如{"个人事务":[{'pk':1,'title':'aaa'},etc],"工作":[{'pk':2,'title':'aab'},etc]}
     """
-    pass
+    rd = {}
+    for i in schedule_list:
+        if i.type.type_name not in rd:
+            rd[i.type.type_name] = []
+        rd[i.type.type_name].append(
+            {'pk': i.pk, 'title': i.title, 'description': i.description, 'notify_time': i.notify_time,
+             'start_time': i.start_time, 'end_time': i.end_time, 'creator': i.creator,
+             'participator_count': i.participator_count, 'type': i.type})
+    return rd
