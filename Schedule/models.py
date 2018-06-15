@@ -34,7 +34,6 @@ class Schedule(models.Model):
                              verbose_name="type",
                              help_text="the schedule's type.")
 
-
 class ScheduleParticipator(models.Model):
     schedule = models.ForeignKey(Schedule,
                                  on_delete=models.CASCADE,

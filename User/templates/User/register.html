@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    if ("{{ Regstatus }}"=='True'){
+       function redirect(){
+       window.location.href = "/{{ username }}";
+    }
+    setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+    }
+</script>
+<form action="" method="post">{% csrf_token %}
+  <p>Username: <input type="text" name="username" /></p>
+  <p>Password: <input type="text" name="password" /></p>
+    <p>gender: <input type="text" name="gender" /></p>
+  <input type="submit" value="Submit" />
+    <p>{{ Regstatus }}</p>
+</body>
+</html>
