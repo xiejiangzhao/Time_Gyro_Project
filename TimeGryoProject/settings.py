@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'User.apps.UserConfig',
+    #'User.apps.UserConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'Schedule'
 ]
 
-AUTH_USER_MODEL = 'User.User'
+AUTH_USER_MODEL = 'User.GyroUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

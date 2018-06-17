@@ -37,6 +37,11 @@ def create_user(username:str,password:str,email=None):
     :param email:
     :return: 成功返回一个用户对象,失败返回None,用户名不能同名
     """
+    try:
+        user = GyroUser.objects.create_user(username, email, password)
+        return user
+    except Exception as e:
+        return None
 
 def change_user(username,password,gender,birthday):
     """
@@ -47,5 +52,11 @@ def change_user(username,password,gender,birthday):
     :return: 根据以上信息修改,成功返回True,失败返回Faslse,传入参数都是字符串
     """
     try:
-        u = GyroUser.objects.
-
+        user = GyroUser.objects.get(username=username)
+        user.set_password(password)
+        user.gender = gender
+        user.birthday = birthday
+        user.save()
+        return True
+    except Exception as e:
+        return False
