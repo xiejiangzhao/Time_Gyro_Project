@@ -20,6 +20,17 @@ def login(request):
     print(request.session['Logstatus'])
     return render(request, 'User/login.html', context)
 
+def register(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    context = {'Logstatus': False}
+    request.session['Logstatus'] = False
+    user_data = User.objects.filter(username=username,password=password)
+    if len(user_data) != 0:
+        context['Logstatus']=True
+        request.session['Logstatus']=True
+    print(request.session['Logstatus'])
+    return render(request, 'User/register.html', context)
 
 def userprofile(request):
     first_name = request.POST['fname']
