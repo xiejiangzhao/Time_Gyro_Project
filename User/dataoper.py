@@ -8,6 +8,8 @@ from .models import GyroUser
 数据对象包含的内容:
 Schedule里面的内容
 """
+
+
 def authenticate(username: str, password: str):
     """
     :param username:用户名
@@ -30,7 +32,7 @@ def login(request, user):
     auth.login(request, user)
 
 
-def create_user(username:str,password:str,email=None):
+def create_user(username: str, password: str, email=None):
     """
     :param username:
     :param password:
@@ -43,7 +45,8 @@ def create_user(username:str,password:str,email=None):
     except Exception as e:
         return None
 
-def change_user(username,password,gender,birthday):
+
+def change_user(username, password, gender, birthday):
     """
     :param username:
     :param password:
@@ -59,4 +62,12 @@ def change_user(username,password,gender,birthday):
         user.save()
         return True
     except Exception as e:
+        return False
+
+
+def user_exist(username):
+    user = GyroUser.objects.get(username=username)
+    if len(user) != 0:
+        return True
+    else:
         return False

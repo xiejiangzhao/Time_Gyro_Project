@@ -16,20 +16,8 @@ def login_view(request):
     user = authenticate(username=username, password=password)
     if user is not None:
         login(request, user)
-        return redirect(reverse('user_profile', args=[username]))
+        return redirect('userprofile', username=username)
     return render(request, 'User/login.html', context)
-
-def register(request):
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    context = {'Logstatus': False}
-    request.session['Logstatus'] = False
-    user_data = User.objects.filter(username=username,password=password)
-    if len(user_data) != 0:
-        context['Logstatus']=True
-        request.session['Logstatus']=True
-    print(request.session['Logstatus'])
-    return render(request, 'User/register.html', context)
 
 def register(request):
     username = request.POST.get('username')
@@ -40,9 +28,9 @@ def register(request):
         context['Regstatus'] = 'Init'
         return render(request, 'User/register.html', context)
     else:
-        res=create_user(username,password,email)
+        res = create_user(username, password, email)
         if res is not None:
-            return redirect('user_profile', username=username)
+            return redirect('userprofile', username=username)
         else:
             return render(request, 'User/register.html', context)
 
