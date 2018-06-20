@@ -1,5 +1,5 @@
 from django.db import models
-from User.models import User
+from User.models import GyroUser
 
 
 class ScheduleType(models.Model):
@@ -22,7 +22,7 @@ class Schedule(models.Model):
                                       help_text="schedule's start time.")
     end_time = models.DateTimeField(verbose_name="end_time",
                                     help_text="schedule's end time.")
-    creator = models.ForeignKey(User,
+    creator = models.ForeignKey(GyroUser,
                                 on_delete=models.CASCADE,
                                 verbose_name="creator",
                                 help_text="schedule's creator.")
@@ -34,13 +34,12 @@ class Schedule(models.Model):
                              verbose_name="type",
                              help_text="the schedule's type.")
 
-
 class ScheduleParticipator(models.Model):
     schedule = models.ForeignKey(Schedule,
                                  on_delete=models.CASCADE,
                                  verbose_name="schedule",
                                  help_text="the schedule that user participate.")
-    participator = models.ForeignKey(User,
+    participator = models.ForeignKey(GyroUser,
                                      on_delete=models.CASCADE,
                                      verbose_name="participator",
                                      help_text="the user who participate the schedule.")
