@@ -135,7 +135,7 @@ def attend_Sechedule(title,desc,notify_time,start_time,end_time,creator,particip
     :param user:
     :return:
     """
-def schetodict(user_sche:list):
+def schetodict(user_sche:list)->dict:
     """
     :param user_sche:
     :return:
