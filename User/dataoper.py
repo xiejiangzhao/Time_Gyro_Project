@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.contrib import auth
 from .models import GyroUser
-
+from Schedule.models import *
 """
 用户对象包含的内容:
 原生的username,email和扩展的schedule_created_count,schedule_attended_count,notice_count,gender,birthday
@@ -30,6 +30,10 @@ def login(request, user):
     :return: 不必要再去检验密码,登陆后记得修改session,与官方保持一致即可(参考官方的login就可以了)
     """
     auth.login(request, user)
+
+
+def logout(request):
+    auth.logout(request)
 
 
 def create_user(username: str, password: str, email=None):
@@ -71,3 +75,63 @@ def user_exist(username):
         return True
     else:
         return False
+
+def create_Schedule(title,desc,notify_time,start_time,end_time,creator,participator_count,type,user):
+    """
+    一个用户创建一个任务,最后一个你在注释里说明要用户对象还是用户名
+    :param title:
+    :param desc:
+    :param notify_time:
+    :param start_time:
+    :param end_time:
+    :param creator:
+    :param participator_count:
+    :param type:
+    :param user:
+    :return:
+    """
+    pass
+
+def delete_Schedule(title,desc,notify_time,start_time,end_time,creator,participator_count,type,user):
+    """
+    用户创始人删除任务,最后一个你在注释里说明要用户对象还是用户名
+    :param title:
+    :param desc:
+    :param notify_time:
+    :param start_time:
+    :param end_time:
+    :param creator:
+    :param participator_count:
+    :param type:
+    :param user:
+    :return:
+    """
+    pass
+def change_Schedule(title,desc,notify_time,start_time,end_time,creator,participator_count,type,user):
+    """
+    用户创始人修改任务,最后一个你在注释里说明要用户对象还是用户名
+    :param title:
+    :param desc:
+    :param notify_time:
+    :param start_time:
+    :param end_time:
+    :param creator:
+    :param participator_count:
+    :param type:
+    :param user:
+    :return:
+    """
+def attend_Sechedule(title,desc,notify_time,start_time,end_time,creator,participator_count,type,user):
+    """
+    用户参与任务
+    :param title:
+    :param desc:
+    :param notify_time:
+    :param start_time:
+    :param end_time:
+    :param creator:
+    :param participator_count:
+    :param type:
+    :param user:
+    :return:
+    """

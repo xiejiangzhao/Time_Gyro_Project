@@ -24,3 +24,6 @@ class GyroUser(AbstractUser):
     birthday = models.DateField(null=True, verbose_name="birthday",
                                 help_text="user's birthday, must be YYYY-MM-DD")
 
+    def is_authenticated(self):
+        super().is_authenticated()
+
