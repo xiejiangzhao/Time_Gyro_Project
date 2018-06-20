@@ -135,3 +135,10 @@ def attend_Sechedule(title,desc,notify_time,start_time,end_time,creator,particip
     :param user:
     :return:
     """
+def schetodict(user_sche:list):
+    """
+    :param user_sche:
+    :return:
+    形如{"个人事务":[{'pk':1,'title':'aaa'},etc],"工作":[{'pk':2,'title':'aab'},etc]}
+    """
+    pass
