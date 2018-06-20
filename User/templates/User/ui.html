@@ -1,12 +1,12 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'User/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'User/ui_style.css' %}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
 <style>
 #header {
-    background-color:#24292e;
+    background-color:#2f435e;
     color:white;
     text-align:left;
     padding:13px;
@@ -62,7 +62,7 @@
 
 <body>
 <div id="header">
-<h1 style="left: 80px; position: absolute; top: 8px;font-family: 微软雅黑;">Time Gyro</h1>
+<h1 style="left: 80px; position: absolute; top: 8px;font-family: 微软雅黑;">Settings</h1>
 </div>
 <div style="left: 490px; position: absolute; top: 210px;" id="nav">
     <p style="font-size:150%">Time-Management<br></p>
@@ -73,15 +73,9 @@
 <form>
 
 <div style="left: 1120px; position: absolute; top: 37px;font-size: x-large;font-family: 微软雅黑;">
-    <a href="{% url 'login' %}" style="color: white;text-decoration: none;">Sign in</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <a href="{% url 'register' %}" style="color: white;text-decoration: none;">Sign up</a>
+    <a href="{% url 'login' %}" style="color: white;text-decoration: none;">Settings</a>
 </div>
 
-<div style="left: 659px; position: absolute; top: 656px;" id="attention">
-<p>©Copyright belongs to the SYSU.<br>
-    Connect us by email.
-</p>
-</div>
 </form>
 
 </body>
