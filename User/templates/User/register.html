@@ -29,7 +29,7 @@ body{
 
 <p style="left: 574px; position: absolute; top: 55px; font-size: xx-large;font-family: 方正兰亭超细黑简体 ;color: #2f435e;">Sign up to Time_Gyro</p>
 <div style="left: 590px; position: absolute; top: 160px;" id="section">
- <form action="" method="post">{% csrf_token %}
+ <form action="ui.html" method="post">{% csrf_token %}
      <p>Username<br><input style="border-width:0.05cm;border-radius:5px;height:0.7cm;width:6cm;" type="text" name="username" /></p><p style="font-size: small;color: grey;">This will be your username. You can add the<br>name of your organization later.</p>
      <p>Email address<br><input style="border-width:0.05cm;border-radius:5px;height:0.7cm;width:6cm;" type="text" name="email" /></p><p style="font-size: small;color: grey;">You can use your email to sign in.<br>We'll send you account related emails.</p>
      <p>Password<br><input style="border-width:0.05cm;border-radius:5px;height:0.7cm;width:6cm;" type="password" name="password" /></p><p style="font-size: small;color: grey;">Use at least one lowercase letter, <br>one numeral, and seven characters.</p>

@@ -1,12 +1,23 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'User/ui_style.css' %}" />
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+     <meta http-equiv="Content-Type" content="text/html; charset="utf-8" />
+   <script src="file_js/data.js"></script>
+   <div id="hello">登陆</div>
+<script>
+$(document).ready(function(){
+  $("#click_btn").click(function(){
+    $("#hello").html("你好，xxx");
+  });
+});
+</script>
 </head>
 <body>
 {% for i in aaa %}
-{{ i }}
+    <p>{{ i }}</p>
 {% endfor %}
 </body>
 </html>

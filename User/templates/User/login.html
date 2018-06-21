@@ -39,11 +39,11 @@ body{
 
 <p style="left: 578px; position: absolute; top: 55px; font-size: xx-large;font-family: 方正兰亭超细黑简体 ;color: #2f435e;">Sign in to Time_Gyro</p>
 <div style="left: 610px; position: absolute; top: 160px;" id="section">
- <form action="" method="post">{% csrf_token %}
+ <form action="ui.html" method="post">{% csrf_token %}
      <p>Username or email address<br><input style="border-width:0.05cm;border-radius:5px;height:0.7cm;width:6cm;" type="text" name="username"/></p>
      <p>Password<br><input style="border-width:0.05cm; border-radius: 5px;height:0.7cm;width:6cm;" type="password" name="password" /></p>
      <p style="color: red;">{{ Logstatus }}</p>
-     <input style="border-radius:3px;font-family: 微软雅黑;height:1cm;width:6cm;background-color: cadetblue;border: none;color: white;" type="submit"  value="Submit"/>
+     <input style="border-radius:3px;font-family: 微软雅黑;height:1cm;width:6cm;background-color: cadetblue;border: none;color: white;" type="submit"  value="Submit" />
  </form>
 </div>
 
