@@ -8,27 +8,26 @@ from django.http import HttpResponse
 
 
 def index(request):
-    # print(request.user.is_aunthenticated)
     return render(request, 'User/index.html')
 
 
 def login_view(request):
-    context = {'Logstatus': 'False'}
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('userprofile', username=username)
-        return render(request, 'User/login.html', context)
+            if request.GET.get('next', '') == '':
+                return redirect('userprofile', username=username)
+            else:
+                return redirect(request.GET.get('next', ''))
+        return render(request, 'User/login.html', {'Logstatus': 'False'})
     else:
-        context['Logstatus'] = 'Init'
         return render(request, 'User/login.html')
 
 
 def register(request):
-    context = {'Regstatus': 'False'}
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -37,10 +36,9 @@ def register(request):
         if res is not None:
             return redirect('userprofile', username=username)
         else:
-            return render(request, 'User/register.html', context)
+            return render(request, 'User/register.html', {'Regstatus': 'False'})
     else:
-        context['Regstatus'] = 'Init'
-        return render(request, 'User/register.html', context)
+        return render(request, 'User/register.html')
 
 
 @login_required
@@ -48,33 +46,52 @@ def userprofile(request, username):
     print(request.user.is_authenticated)
     if request.method == 'GET':
         user_sche = Schedule.objects.filter(creator=request.user)
-        context = schetodict(user_sche)
+        context = schedule_list_to_dict(user_sche)
         context['username'] = request.user.username
         return render(request, 'User/userprofile.html', context)
 
 
 def scheduleprofile(request, schedulepk):
     if request.method == 'GET':
-        obj_sche=Schedule.objects.get(pk=schedulepk)
-        context={'title':obj_sche.title,'desc':obj_sche.description,}
-    pass
+        obj_sche = Schedule.objects.get(pk=schedulepk)
+        context = {'title': obj_sche.title, 'desc': obj_sche.description, 'notify_time_day': obj_sche.notify_time.days,
+                   'start_time': obj_sche.start_time,
+                   'end_time': obj_sche.end_time, 'participator_count': obj_sche.participator_count,
+                   'type': obj_sche.type}
+        return render(request, 'User/new_schedule.html', context)
+    elif request.method == 'POST':
+        oper = request.POST.get('operation')
+        pk = request.POST.get('pk')
+        if oper == 'Delete':
+            Schedule.objects.get(pk=pk).delete()
+            return redirect('userprofile', username=request.user.username)
+        elif oper == 'Update':
+            title = request.POST.get('title')
+            desc = request.POST.get('description')
+            notify_time = datetime.timedelta(days=int(request.POST.get('days')), hours=int(request.POST.get('hours')))
+            start_time = request.POST.get('start_time')
+            end_time = request.POST.get('end_time')
+            creator = request.user
+            type = ScheduleType.objects.create(type_name=request.POST.get('type_name'))
+            Schedule.objects.get(pk=pk).update(title=title, description=desc, notify_time=notify_time,
+                                               start_time=start_time,
+                                               end_time=end_time, creator=creator, type=type)
+            return redirect('userprofile', username=request.user.username)
 
+    def create_schedule(request, username):
+        if request.method == 'GET':
+            return render(request, 'User/new_schedule.html')
+        else:
+            title = request.POST.get('title')
+            desc = request.POST.get('description')
+            notify_time = datetime.timedelta(days=int(request.POST.get('days')), hours=int(request.POST.get('hours')))
+            start_time = request.POST.get('start_time')
+            end_time = request.POST.get('end_time')
+            creator = request.user
+            type = ScheduleType.objects.create(type_name=request.POST.get('type_name'))
+            Schedule.objects.create(title=title, description=desc, notify_time=notify_time, start_time=start_time,
+                                    end_time=end_time, creator=creator, type=type)
+            return redirect('userprofile', username=username)
 
-def create_schedule(request, username):
-    if request.method == 'GET':
-        return render(request, 'User/new_schedule.html')
-    else:
-        title = request.POST.get('title')
-        desc = request.POST.get('description')
-        notify_time = datetime.timedelta(days=int(request.POST.get('days')), hours=int(request.POST.get('hours')))
-        start_time = request.POST.get('start_time')
-        end_time = request.POST.get('end_time')
-        creator = request.user
-        type = ScheduleType.objects.create(type_name=request.POST.get('type_name'))
-        Schedule.objects.create(title=title, description=desc, notify_time=notify_time, start_time=start_time,
-                                end_time=end_time, creator=creator, type=type)
-        return redirect('userprofile', username=username)
-
-
-def test(request):
-    return render(request, 'User/register.html')
+    def test(request):
+        return render(request, 'User/register.html')

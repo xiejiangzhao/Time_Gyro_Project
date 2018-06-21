@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<head>
+<style>
+body{
+    background-color: #f2f2f2;
+}
+#section {
+    font-family: 微软雅黑,宋体,Arial,Helvetica,Verdana,sans-serif;
+    background-color: white;
+    color: #2f435e;
+    border-radius: 10px;
+    border-style: groove;
+    border-color:cadetblue;
+    border-width: thin;
+    width: 6.9cm;
+    height: 5.9cm;
+    text-align:center;
+    font-size: small;
+}
+
+#footer {
+    clear:both;
+    text-align:center;
+    color: #2f435e;
+    font-family: "Adobe 仿宋 Std R";
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<p style="left: 578px; position: absolute; top: 55px; font-size: xx-large;font-family: 方正兰亭超细黑简体 ;color: #2f435e;">Sign in to Time_Gyro</p>
+<div style="left: 610px; position: absolute; top: 160px;" id="section">
+ <form action="" method="post">{% csrf_token %}
+     <p>Username or email address<br><input style="border-width:0.05cm;border-radius:5px;height:0.7cm;width:6cm;" type="text" name="username"/></p>
+     <p>Password<br><input style="border-width:0.05cm; border-radius: 5px;height:0.7cm;width:6cm;" type="password" name="password" /></p>
+     <p style="color: red;">{{ Logstatus }}</p>
+     <input style="border-radius:3px;font-family: 微软雅黑;height:1cm;width:6cm;background-color: cadetblue;border: none;color: white;" type="submit"  value="Submit"/>
+ </form>
+</div>
+
+<div style="left: 593px; position: absolute; top: 429px;" id="footer">
+   <a href="{% url 'register' %}">New to Time_Gyro? Create an account.</a>
+</div>
+</body>
+
+</body>
+</html>
