@@ -78,20 +78,20 @@ def scheduleprofile(request, schedulepk):
                                                end_time=end_time, creator=creator, type=type)
             return redirect('userprofile', username=request.user.username)
 
-    def create_schedule(request, username):
-        if request.method == 'GET':
-            return render(request, 'User/new_schedule.html')
-        else:
-            title = request.POST.get('title')
-            desc = request.POST.get('description')
-            notify_time = datetime.timedelta(days=int(request.POST.get('days')), hours=int(request.POST.get('hours')))
-            start_time = request.POST.get('start_time')
-            end_time = request.POST.get('end_time')
-            creator = request.user
-            type = ScheduleType.objects.create(type_name=request.POST.get('type_name'))
-            Schedule.objects.create(title=title, description=desc, notify_time=notify_time, start_time=start_time,
-                                    end_time=end_time, creator=creator, type=type)
-            return redirect('userprofile', username=username)
+def create_schedule(request, username):
+    if request.method == 'GET':
+        return render(request, 'User/new_schedule.html')
+    else:
+        title = request.POST.get('title')
+        desc = request.POST.get('description')
+        notify_time = datetime.timedelta(days=int(request.POST.get('days')), hours=int(request.POST.get('hours')))
+        start_time = request.POST.get('start_time')
+        end_time = request.POST.get('end_time')
+        creator = request.user
+        type = ScheduleType.objects.create(type_name=request.POST.get('type_name'))
+        Schedule.objects.create(title=title, description=desc, notify_time=notify_time, start_time=start_time,
+                                end_time=end_time, creator=creator, type=type)
+        return redirect('userprofile', username=username)
 
     def test(request):
         return render(request, 'User/register.html')
