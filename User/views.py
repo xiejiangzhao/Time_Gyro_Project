@@ -8,7 +8,9 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return render(request, 'User/index.html')
+    unitlist = {'van': {'name': 'van', 'age': '24'}, 'banana': {'name': 'banana', 'age': '9527'},
+                'bili': {'name': 'bili', 'age': '123'}, 'leijun': {'name': 'are you ok', 'age': '40'}}
+    return render(request, 'User/index.html', {'unitlist': unitlist})
 
 
 def login_view(request):
@@ -43,6 +45,8 @@ def register(request):
 
 @login_required
 def userprofile(request, username):
+    if username != request.user.username:
+        return redirect('userprofile', username=request.user.username)
     if request.method == 'GET':
         user_sche = Schedule.objects.filter(creator=request.user)
         item1 = {'title': 'item1', 'pk': 1}
@@ -50,9 +54,9 @@ def userprofile(request, username):
         itemlist = [item1, item2]
         unit1 = {'title': 'unit1', 'itemlist': itemlist}
         unit2 = {'title': 'unit2', 'itemlist': itemlist}
-        unitlist=[unit1,unit2]
+        unitlist = [unit1, unit2]
         unitlist = schedule_list_to_dict(user_sche)
-        return render(request, 'User/userprofile.html', {'unitlist':unitlist})
+        return render(request, 'User/userprofile.html', {'unitlist': unitlist})
 
 
 def scheduleprofile(request, schedulepk):
@@ -99,6 +103,17 @@ def create_schedule(request, username):
         return redirect('userprofile', username=username)
 
 
+@login_required
+def login_out(request):
+    logout(request)
+    return redirect('index')
+
+
 def test(request):
-    re = {"ge": ['a', 'b', 'c'], "fu": ['c', 'd']}
-    return render(request, 'User/ui.html', re)
+    item1 = {'title': 'item1', 'pk': 1}
+    item2 = {'title': 'item2', 'pk': 2}
+    itemlist = [item1, item2]
+    unit1 = {'title': 'unit1', 'itemlist': itemlist}
+    unit2 = {'title': 'unit2', 'itemlist': itemlist}
+    unitlist = [unit1, unit2]
+    return render(request, 'User/ui.html', {'unitlist': unitlist})

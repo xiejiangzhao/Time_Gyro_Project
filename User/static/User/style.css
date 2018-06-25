@@ -1,4 +1,16 @@
-body {
-    background: white url("images/back.jpg") no-repeat;
-    background-size: 100% 100%;
+#datastyle{
+    color: #4eb980;
+    text-align: left;
+    position: absolute;
+    border:none;
+}
+#box{
+    width: 40px;
+    font-family: 'Microsoft YaHei';
+}
+#imgtest{
+    background-color: #4eb980;
+    padding-top:10px;
+    border-radius:49px 0px 49px 0px;
+    border-radius: 75px;
 }
