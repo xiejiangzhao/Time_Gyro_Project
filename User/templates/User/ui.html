@@ -60,11 +60,11 @@
 
     <!--尝试传数据-->
 <div id="datastyle" style="left: 354px;top:100px;">
-  {% for it, key in unitlist.items%}
-    <p>{{it}}</p>
-         {% for k,i in key.items%}
-             <p>{{ k }}:{{ i }}</p>
-         {% endfor %}
+  {% for it in unitlist %}
+    <p>{{ it.title }}</p>
+    {% for foo in it.itemlist %}
+            <p>{{ foo }}</p>
+    {% endfor %}
     <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
   {% endfor %}
 </div>
