@@ -1,56 +1,79 @@
+{% load static %}
+<link href="/static/User/style.css" rel="stylesheet" type="text/css" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="" rel="stylesheet">
+    <style type="text/css">
 
-<style type="text/css">
-.imgtest{margin:10px 5px;
-overflow:hidden;}
-.list_ul figcaption p{
-font-size:3px;
-color:cadetblue;
-}
-.imgtest figure div{
-display:inline-block;
-margin:5px auto;
-width:75px;
-height:75px;
-border-radius:100px;
-border:2px solid cadetblue;
-overflow:hidden;
--webkit-box-shadow:0 0 3px #ccc;
-box-shadow:0 0 3px #ccc;
-}
-.imgtest img{width:100%;
-min-height:100%; text-align:center;}
+    input{
+        width: 160px;
+        border: 1px solid cadetblue;
+        border-radius: 70px;
+        height: 30px;
+        float: left;
+        padding:0 0 0 15px;
+        outline: none;
+    }
 </style>
 
 </head>
-
 <body>
 {% for foo in ge %}
 <p>{{ foo }}</p>
 {% endfor %}
 
-<div class="imgtest" style="left: 140px; position: absolute; top: 60px;">
+<div class="imgtest" style="left: 196px; position: absolute; top:60px; color: cadetblue;
+        width: 75px;height: 75px; border-radius: 75px; text-decoration: none;
+        background-color: cadetblue;color: white;outline: none;border: none;">
  <figure>
   <div>
-    <img src="rin.jpg" />
+    <!--<img src="rin.jpeg" />-->
+    <!--头像出不来-->
   </div>
  </figure>
 </div>
 
-<h1 style="left: 280px; position: absolute; top: 108px;color:cadetblue;text-decoration: none;font-size: large;">窃格瓦拉</h1>
+<form>
+  <div id="box" style="left: 1115px; position: absolute; top: 20px;">
+    <input id="key" type="text" name="search" placeholder="">
+  </div>
+  <button type="submit" style="left: 1280px; position: absolute; top:27px; color: cadetblue;
+        width: 18px;height: 18px; border-radius: 18px; text-decoration: none;
+        background-color: cadetblue;color: white;outline: none;border: none;">
+  </button>
+</form>
+
+
+<h1 style="left: 280px; position: absolute; top: 108px;color:cadetblue;text-decoration: none;font-size: large;"></h1>
 
 <div>
     <a href="" style="color:cadetblue;text-decoration: none;left: 211.5px; position: absolute; top: 550px;font-size: x-large;">+</a>
-    <a href="" style="color:cadetblue;text-decoration: none;left: 210px; position: absolute; top: 588.2px;font-size: large;">۞</a>
+    <a href="setting.html" style="color:cadetblue;text-decoration: none;left: 210px; position: absolute; top: 588.2px;font-size: large;">۞</a>
     <a href="index.html" style="color:cadetblue;text-decoration: none;left: 213px; position: absolute; top: 610px;font-size: x-large;">■</a>
 </div>
 
-<br><br><br><br><br><br><br><br><hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 25.8cm;text-align: center" />
-<h1 class="text-truncate">
-</h1>
+<br><br><br><br><hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
+
+    <!--尝试传数据-->
+<div id="datastyle" style="left: 354px;top:100px;">
+  {% for it, key in unitlist.items%}
+    <p>{{it}}</p>
+         {% for k,i in key.items%}
+             <p>{{ k }}:{{ i }}</p>
+         {% endfor %}
+    <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
+  {% endfor %}
+</div>
 
 </body>
 </html>
+
+
+
+
+
+

@@ -6,10 +6,9 @@ import datetime
 # Create your views here.
 from django.http import HttpResponse
 
-
 def index(request):
-    return render(request, 'User/index.html')
-
+    unitlist = {'van':{'name':'van','age':'24'} , 'banana':{'name':'banana','age':'9527'}, 'bili':{'name':'bili','age':'123'}, 'leijun':{'name':'are you ok','age':'40'}}
+    return render(request, 'User/index.html',{'unitlist':unitlist})
 
 def login_view(request):
     if request.method == 'POST':
