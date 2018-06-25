@@ -5,6 +5,7 @@ from django.contrib import auth
 
 from Schedule.models import *
 
+from User.models import GyroUser
 """
 用户对象包含的内容:
 原生的username,email和扩展的schedule_created_count,schedule_attended_count,notice_count,gender,birthday
@@ -148,18 +149,25 @@ def attend_sechedule(title, desc, notify_time, start_time, end_time, creator, pa
     pass
 
 
-def schedule_list_to_dict(schedule_list: List[Schedule]) -> Dict:
+def schedule_list_to_dict(schedule_list: List[Schedule]) -> list:
     """
     :param schedule_list:
     :return:
     形如{"个人事务":[{'pk':1,'title':'aaa'},etc],"工作":[{'pk':2,'title':'aab'},etc]}
     """
-    rd = {}
-    for i in schedule_list:
-        if i.type.type_name not in rd:
-            rd[i.type.type_name] = []
-        rd[i.type.type_name].append(
-            {'pk': i.pk, 'title': i.title, 'description': i.description, 'notify_time': i.notify_time,
-             'start_time': i.start_time, 'end_time': i.end_time, 'creator': i.creator,
-             'participator_count': i.participator_count, 'type': i.type})
-    return rd
+    unitlist = []
+    for schedule in schedule_list:
+        flag = False
+        for unit in unitlist:
+            if schedule.type.type_name == unit['title']:
+                unit['itemlist'].append({'title': schedule.title, 'pk': schedule.pk})
+                flag = True
+                break
+        if flag is not True:
+            unitlist.append(
+                {'title': schedule.type.type_name, 'itemlist': [{'title': schedule.title, 'pk': schedule.pk}]})
+    return unitlist
+
+obj=GyroUser.objects.get(username='xiejiangzha')
+user_sche = Schedule.objects.filter(creator=obj)
+context = schedule_list_to_dict(user_sche)

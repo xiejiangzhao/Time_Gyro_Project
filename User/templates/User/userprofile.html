@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-{% for i in aaa %}
-{{ i }}
+<body >
+{% for it in unitlist %}
+    <p>{{ it.title }}</p>
+    {% for foo in it.itemlist %}
+            <p>{{ foo }}</p>
+    {% endfor %}
+
 {% endfor %}
 </body>
 </html>
