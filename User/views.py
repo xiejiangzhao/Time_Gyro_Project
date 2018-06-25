@@ -43,12 +43,16 @@ def register(request):
 
 @login_required
 def userprofile(request, username):
-    print(request.user.is_authenticated)
     if request.method == 'GET':
         user_sche = Schedule.objects.filter(creator=request.user)
-        context = schedule_list_to_dict(user_sche)
-        context['username'] = request.user.username
-        return render(request, 'User/userprofile.html', context)
+        item1 = {'title': 'item1', 'pk': 1}
+        item2 = {'title': 'item2', 'pk': 2}
+        itemlist = [item1, item2]
+        unit1 = {'title': 'unit1', 'itemlist': itemlist}
+        unit2 = {'title': 'unit2', 'itemlist': itemlist}
+        unitlist=[unit1,unit2]
+        unitlist = schedule_list_to_dict(user_sche)
+        return render(request, 'User/userprofile.html', {'unitlist':unitlist})
 
 
 def scheduleprofile(request, schedulepk):
@@ -78,6 +82,7 @@ def scheduleprofile(request, schedulepk):
                                                end_time=end_time, creator=creator, type=type)
             return redirect('userprofile', username=request.user.username)
 
+
 def create_schedule(request, username):
     if request.method == 'GET':
         return render(request, 'User/new_schedule.html')
@@ -93,5 +98,7 @@ def create_schedule(request, username):
                                 end_time=end_time, creator=creator, type=type)
         return redirect('userprofile', username=username)
 
-    def test(request):
-        return render(request, 'User/register.html')
+
+def test(request):
+    re = {"ge": ['a', 'b', 'c'], "fu": ['c', 'd']}
+    return render(request, 'User/ui.html', re)
