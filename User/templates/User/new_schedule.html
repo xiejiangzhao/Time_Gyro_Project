@@ -25,17 +25,29 @@
 					<form method="post" action="">{% csrf_token %}
 						<div class="row">
 							<div class="col-12">
-								<input type="text" name="username" placeholder="Name" />
+								<input type="text" name="title" placeholder="Title" />
 							</div>
 							<div class="col-12">
-								<input type="password" name="password" placeholder="Password" minLength="8" />
+								<input type="text" name="description" placeholder="Description" />
 							</div>
                             <div class="col-12">
-								<input type="email" name="email" placeholder="Email" />
+								<input type="text" name="days" placeholder="days" />
+							</div>
+                            <div class="col-12">
+								<input type="text" name="hours" placeholder="hours" />
+							</div>
+                            <div class="col-12">
+								<input type="text" name="start_time" placeholder="start_time" />
+							</div>
+                            <div class="col-12">
+								<input type="text" name="end_time" placeholder="end_time" />
+							</div>
+                            <div class="col-12">
+								<input type="text" name="type_name" placeholder="type_name" />
 							</div>
 							<div class="col-12">
 								<ul class="actions special">
-									<li><input type="submit" value="Sign up" /></li>
+									<li><input type="submit" value="Create" /></li>
 								</ul>
 							</div>
 						</div>
