@@ -180,12 +180,11 @@ def schedule_view(request, schedule_pk):
         title = sche_obj.title
         desc = sche_obj.description
         notify_day = sche_obj.notify_time.days
-        notify_hour = sche_obj.notify_time.hours
         start_time = sche_obj.start_time
         end_time = sche_obj.end_time
         creator = request.user.username
         type = sche_obj.type.type_name
-        context = {'title': title, 'desc': desc, 'notify_day': notify_day, 'notify_hour': notify_hour,
+        context = {'title': title, 'desc': desc, 'notify_day': notify_day ,
                    'start_time': start_time, 'end_time': end_time, 'creator': creator, 'type': type}
         return render(request, 'User/scheduleprofile.html', context)
     else:
