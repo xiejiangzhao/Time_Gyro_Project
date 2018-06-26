@@ -1,5 +1,5 @@
 {% load static %}
-<link href="/static/User/style.css" rel="stylesheet" type="text/css" />
+<link href="{% static "User/style.css" %}" rel="stylesheet" type="text/css" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +64,7 @@
       <form action="views.html" method="post">
           {% with operation="Delete" %}
           {% endwith %}
-          <input type="submit" name="operation" value="x" style="width:38px;color: cadetblue;background-color: white;text-align: left;"/>
+          <input type="submit" name="operation" value="Delete" style="width:38px;color: cadetblue;background-color: white;text-align: left;"/>
       </form>
       <br><br><hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
   {% endfor %}

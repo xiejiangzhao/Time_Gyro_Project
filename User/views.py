@@ -57,6 +57,12 @@ def userprofile(request, username):
         unitlist = [unit1, unit2]
         unitlist = schedule_list_to_dict(user_sche)
         return render(request, 'User/userprofile.html', {'unitlist': unitlist})
+    elif request.method == 'POST':
+        oper = request.POST.get('operation')
+        pk = request.POST.get('pk')
+        if oper == 'Delete':
+            Schedule.objects.get(pk=pk).delete()
+            return redirect('userprofile', username=request.user.username)
 
 
 def scheduleprofile(request, schedulepk):
