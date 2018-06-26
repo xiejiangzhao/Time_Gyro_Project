@@ -106,13 +106,14 @@ def create_schedule(request, username):
     else:
         title = request.POST.get('title')
         desc = request.POST.get('description')
-        notify_time=datetime.datetime.strftime(request.POST.get('notify_time'),'%H-%M-%S')
-        #notify_time = datetime.timedelta(hours=int(notify_time.hour),)
+        notify_time = datetime.timedelta(days=int(request.POST.get('notify_day')),
+                                         hours=int(request.POST.get('notify_hour')))
         start_time = request.POST.get('start_time')
         end_time = request.POST.get('end_time')
         creator = request.user
         type = ScheduleType.objects.create(type_name=request.POST.get('type_name'))
-        Schedule.objects.create(title=title, description=desc, notify_time=request.POST.get('notify_time'), start_time=start_time,
+        Schedule.objects.create(title=title, description=desc, notify_time=notify_time,
+                                start_time=start_time,
                                 end_time=end_time, creator=creator, type=type)
         return redirect('userprofile', username=username)
 
