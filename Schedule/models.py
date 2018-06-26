@@ -43,3 +43,4 @@ class ScheduleParticipator(models.Model):
                                      on_delete=models.CASCADE,
                                      verbose_name="participator",
                                      help_text="the user who participate the schedule.")
+

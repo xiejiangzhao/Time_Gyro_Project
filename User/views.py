@@ -109,6 +109,27 @@ def login_out(request):
     return redirect('index')
 
 
+def setting(request, username):
+    if request.method == 'GET':
+        context = {'username': request.user.username, 'gender': 'Male' if request.user.gender is True else 'Female',
+                   'birthday': request.user.birthday}
+        return render(request, 'User/setting.html', context)
+    else:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        gender = request.POST.get('gender')
+        birthday = request.POST.get('birthday')
+        userobj = GyroUser.objects.get(username=request.user.username)
+        if password != '':
+            userobj.set_password(password)
+        userobj.gender = gender
+        userobj.birthday = birthday
+        userobj.save()
+        context = {'username': request.user.username, 'gender': 'Male' if gender is True else 'Female',
+                   'birthday': birthday}
+        return render(request, 'User/setting.html', context)
+
+
 def test(request):
     item1 = {'title': 'item1', 'pk': 1}
     item2 = {'title': 'item2', 'pk': 2}
