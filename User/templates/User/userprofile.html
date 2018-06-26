@@ -61,7 +61,7 @@
 
 <!--名字-->
 <div style="color: #5b5b5b;left: 169px; position: absolute; top:150px;font-size: x-large; ">
-    <p>username</p>
+    <p>{{ username }}</p>
 </div>
 
 <!--搜索-->
@@ -81,7 +81,7 @@
        style="color: #5b5b5b;text-decoration: none;left: 211.5px; position: absolute; top: 550px;font-size: x-large;">+</a>
     <a href="setting"
        style="color: #5b5b5b;text-decoration: none;left: 210px; position: absolute; top: 588.2px;font-size: large;">۞</a>
-    <a href="logout"
+    <a href="/logout"
        style="color: #5b5b5b;text-decoration: none;left: 213px; position: absolute; top: 610px;font-size: x-large;">■</a>
 </div>
 
@@ -90,24 +90,24 @@
     {% for it in unitlist %}
         <p>{{ it.title }}</p>
         <hr style="height:1px;border:none;border-top:1px solid  #5b5b5b;width: 22cm;text-align: center"/><!--横线-->
-        {% for foo,k in key.items %}
+        {% for foo in it.itemlist %}
 
             <form action="" method="post">{% csrf_token %}
                 {% with operation="Delete" %}
                 {% endwith %}
-                <input type="hidden" name="pk" value="3"/>
+                <input type="hidden" name="pk" value="{{ foo.pk }}"/>
                 <input type="hidden" name="operation" value="Delete"/>
                 <input type="submit" value="◆" style="width:34px;color: #5b5b5b;
                  background-color: white;border:none;
                  float:right;font-size:x-large;"/>
 
-                <a href="scheduleprofile.html" style="color: #5b5b5b;
+                <a href="/schedule/{{ foo.pk }}" style="color: #5b5b5b;
                  text-decoration: none;float:right;border:none;
                  font-size: x-large;">◇</a><!--change-->
 
             </form>
 
-            <span>{{ foo }}</span><!--shuju-->
+            <span>{{ foo.title }}</span><!--shuju-->
 
             <hr style="height:1px;border:none;border-top:1px solid  #5b5b5b;width: 22cm;text-align: center"/><!--横线-->
         {% endfor %}

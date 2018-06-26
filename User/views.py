@@ -61,12 +61,15 @@ def userprofile(request, username):
         part_data = add_participate_unit(ScheduleParticipator.objects.filter(participator=request.user))
         if len(part_data['itemlist']) > 0:
             unitlist.append(part_data)
-        return render(request, 'User/userprofile.html', {'unitlist': unitlist})
+        return render(request, 'User/userprofile.html', {'unitlist': unitlist, 'username': request.user.username})
     elif request.method == 'POST':
         oper = request.POST.get('operation')
         pk = request.POST.get('pk')
         if oper == 'Delete':
             if Schedule.objects.get(pk=pk).creator == request.user:
+                part_list = ScheduleParticipator.objects.filter(schedule=Schedule.objects.get(pk=pk))
+                for i in part_list:
+                    i.delete()
                 Schedule.objects.get(pk=pk).delete()
             else:
                 ScheduleParticipator.objects.get(participator=GyroUser.objects.get(username=request.user.username),
@@ -211,7 +214,10 @@ def test(request):
     return render(request, 'User/ui.html', {'unitlist': unitlist})
 
 
-itchat_user_dict={}
+itchat_user_dict = {}
+itchat_user_dict_reverse = {}
+
+
 @itchat.msg_register(TEXT)
 def text_reply(msg):
     if msg['FromUserName'] == msg['ToUserName']:
@@ -221,29 +227,31 @@ def text_reply(msg):
             res['MessageType'] = 1
             if authenticate(msgdata['User'], msgdata['Password']):
                 res['AuthenticationResult'] = True
-                itchat_user_dict[msgdata['FromUserName']]=msgdata['User']
+                itchat_user_dict[msgdata['FromUserName']] = msgdata['User']
+                itchat_user_dict_reverse[msgdata['User']] = msgdata['FromUserName']
             else:
                 res['AuthenticationResult'] = False
-            send(json.dumps(res),msg['FromUserName'])
+            send(json.dumps(res), msg['FromUserName'])
             print(itchat_user_dict)
         elif msgdata['MessageType'] == 2:
             res['MessageType'] = 2
-            res['Message']=""
-            username=itchat_user_dict[msgdata['FromUserName']]
+            res['Message'] = ""
+            username = itchat_user_dict[msgdata['FromUserName']]
             user_sche = Schedule.objects.filter(creator=GyroUser.objects.get(username=username))
             unitlist = schedule_list_to_dict(user_sche)
-            part_data = add_participate_unit(ScheduleParticipator.objects.filter(participator=GyroUser.objects.get(username=username)))
+            part_data = add_participate_unit(
+                ScheduleParticipator.objects.filter(participator=GyroUser.objects.get(username=username)))
             if len(part_data['itemlist']) > 0:
                 unitlist.append(part_data)
             for unit in unitlist:
-                res['Message']+=unit['title']+':'
+                res['Message'] += unit['title'] + ':'
                 for item in unit['itemlist']:
-                    res['Message']+=item.title+','
-            send(json.dumps(res),msg['FromUserName'])
+                    res['Message'] += item.title + ','
+            send(json.dumps(res), msg['FromUserName'])
 
 
 itchat.auto_login(hotReload=True)
-
+client="ddd"
 
 def job():
     while True:
@@ -253,7 +261,11 @@ def job():
         for sche in sche_all:
             if date_now >= (sche.end_time - sche.notify_time).timestamp():
                 print('Delete', sche.title, sche.pk)
-                Schedule.objects.get(pk=sche.pk).delete()
+                res = {'MessageType': 2}
+                res['ToUserName'] = itchat_user_dict_reverse[sche.creator.username]
+                res['Message']='任务提醒:'+sche.title
+                send(res,client)
+                sche.delete()
         time.sleep(10)
 
 
