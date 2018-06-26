@@ -67,7 +67,8 @@ def userprofile(request, username):
             if Schedule.objects.get(pk=pk).creator == request.user:
                 Schedule.objects.get(pk=pk).delete()
             else:
-                ScheduleParticipator.objects.get(participator=GyroUser.objects.get(username=request.user.username),schedule=Schedule.objects.get(pk=pk)).delete()
+                ScheduleParticipator.objects.get(participator=GyroUser.objects.get(username=request.user.username),
+                                                 schedule=Schedule.objects.get(pk=pk)).delete()
             return redirect('userprofile', username=request.user.username)
 
 
@@ -88,7 +89,7 @@ def scheduleprofile(request, schedulepk):
         elif oper == 'Update':
             title = request.POST.get('title')
             desc = request.POST.get('description')
-            notify_time = datetime.timedelta(days=int(request.POST.get('days')), hours=int(request.POST.get('hours')))
+            notify_time = datetime.timedelta(request.POST.get('notify_time'))
             start_time = request.POST.get('start_time')
             end_time = request.POST.get('end_time')
             creator = request.user
@@ -105,12 +106,13 @@ def create_schedule(request, username):
     else:
         title = request.POST.get('title')
         desc = request.POST.get('description')
-        notify_time = datetime.timedelta(days=int(request.POST.get('days')), hours=int(request.POST.get('hours')))
+        notify_time=datetime.datetime.strftime(request.POST.get('notify_time'),'%H-%M-%S')
+        #notify_time = datetime.timedelta(hours=int(notify_time.hour),)
         start_time = request.POST.get('start_time')
         end_time = request.POST.get('end_time')
         creator = request.user
         type = ScheduleType.objects.create(type_name=request.POST.get('type_name'))
-        Schedule.objects.create(title=title, description=desc, notify_time=notify_time, start_time=start_time,
+        Schedule.objects.create(title=title, description=desc, notify_time=request.POST.get('notify_time'), start_time=start_time,
                                 end_time=end_time, creator=creator, type=type)
         return redirect('userprofile', username=username)
 
@@ -156,9 +158,14 @@ def search(request):
         oper = request.POST.get('operation')
         pk = request.POST.get('pk')
         if oper == 'Add':
-            ScheduleParticipator.objects.create(schedule=Schedule.objects.get(pk=pk),participator=GyroUser.objects.get(username=request.user.username))
+            ScheduleParticipator.objects.create(schedule=Schedule.objects.get(pk=pk),
+                                                participator=GyroUser.objects.get(username=request.user.username))
             return redirect('userprofile', username=request.user.username)
     return render(request, 'User/search.html')
+
+
+def schedule_view(request, schedule_pk):
+    return render(request, 'User/scheduleprofile.html')
 
 
 def test(request):
