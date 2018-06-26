@@ -1,5 +1,5 @@
 {% load static %}
-<link href="{% static "User/style.css" %}" rel="stylesheet" type="text/css"/>
+<link href="/static/User/style.css" rel="stylesheet" type="text/css" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,93 +9,83 @@
     <link href="" rel="stylesheet">
     <style type="text/css">
 
-        input {
-            width: 160px;
-            border: 1px solid #4eb980;
-            border-radius: 70px;
-            height: 30px;
-            float: left;
-            padding: 0 0 0 15px;
-            outline: none;
-        }
-    </style>
+    input{
+        width: 160px;
+        border: 1px solid cadetblue;
+        border-radius: 70px;
+        height: 30px;
+        float: left;
+        padding:0 0 0 15px;
+        outline: none;
+    }
+</style>
 
 </head>
-
 <body>
-{% for foo in ge %}
-    <p>{{ foo }}</p>
-{% endfor %}
 
-<div class="imgtest" style="left: 196px; position: absolute; top:60px; color: #4eb980;
+<!--头像-->
+<div class="imgtest" style="left: 196px; position: absolute; top:60px; color: cadetblue;
         width: 75px;height: 75px; border-radius: 75px; text-decoration: none;
-        background-color: #4eb980;color: white;outline: none;border: none;">
-    <figure>
-        <div>
-            <!--<img src="rin.jpeg" />-->
-            <!--头像出不来-->
-        </div>
-    </figure>
+        background-color: cadetblue;outline: none;border: none;">
+ <figure>
+  <div>
+    <!--<img src="rin.jpeg" />-->
+    <!--头像出不来-->
+  </div>
+ </figure>
 </div>
 
-<!--名字 数据没传-->
+<!--名字-->
 <div style="color: cadetblue;left: 175px; position: absolute; top:122px;font-size: x-large; ">
     <p>username</p>
 </div>
-<!--搜索框-->
-<form action="/search" method="post" target="_blank">
+
+<!--搜索-->
+<form action="/search">
     <div id="box" style="left: 1115px; position: absolute; top: 20px;">
-        <input type="text" name="q" placeholder="">
+        <input id="key" type="text" name="q" placeholder="">
     </div>
-<!--搜索按钮，原来版本。试过input，目前还在试-->
     <button type="submit" style="left: 1280px; position: absolute; top:27px; color: #4eb980;
         width: 18px;height: 18px; border-radius: 18px; text-decoration: none;
         background-color: #4eb980;color: white;outline: none;border: none;">
     </button>
-<!--+按钮，在x基础上改的-->
-      {% with operation="Add" %}
-      {% endwith %}
-        <form action="" method="get">
-            <input type="hidden" name="pk" value=""/>
-            <input type="hidden" name="operation" value="Update"/>
-            <input type="submit" value="+" style="left: 1280px; position: absolute; top:27px; color: cadetblue;
-            width: 18px;height: 18px; border-radius: 18px; text-decoration: none;
-            background-color: cadetblue;outline: none;border: none;"/>
-        </form>
 </form>
 
-
-<h1 style="left: 280px; position: absolute; top: 108px;color:#4eb980;text-decoration: none;font-size: large;"></h1>
-
+<!--三个按键-->
 <div>
-    <a href="create_schedule"
-       style="color:#4eb980;text-decoration: none;left: 211.5px; position: absolute; top: 550px;font-size: x-large;">+</a>
-    <a href="setting"
-       style="color:#4eb980;text-decoration: none;left: 210px; position: absolute; top: 588.2px;font-size: large;">۞</a>
-    <a href="/logout"
-       style="color:#4eb980;text-decoration: none;left: 213px; position: absolute; top: 610px;font-size: x-large;">■</a>
+    <a href="" style="color:cadetblue;text-decoration: none;left: 211.5px; position: absolute; top: 550px;font-size: x-large;">+</a>
+    <a href="setting.html" style="color:cadetblue;text-decoration: none;left: 210px; position: absolute; top: 588.2px;font-size: large;">۞</a>
+    <a href="index.html" style="color:cadetblue;text-decoration: none;left: 213px; position: absolute; top: 610px;font-size: x-large;">■</a>
 </div>
 
-<br><br><br><br>
-<hr style="height:1px;border:none;border-top:1px solid #4eb980;width: 22cm;text-align: center"/>
+<!--第一条横线-->
+<br><br><br><br><hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
+    <!--尝试传数据-->
+<div id="datastyle" style="left: 354px;top:100px;color: cadetblue;">
+  {% for it in unitlist %}
+         <p>{{it.title}}</p>
+         {% for foo in it.itemlist%}
 
-<!--尝试传数据-->
-<div id="datastyle" style="left: 354px;top:100px;">
-    {% for it in unitlist %}
-        <form action="" method="post">{% csrf_token %}
-                <input type="hidden" name="pk" value="{{ foo.pk }}"/>
-                <input type="hidden" name="operation" value="Delete"/>
-                <input type="submit" value="x"
-                       style="float:right;width:34px;color: cadetblue;
-                       background-color: white;text-align: left;
-                       border:none;font-size: large;"/>
-            </form>
-        <p>{{ it.title }}</p>
-        {% for foo in it.itemlist %}
-            <span>{{ foo }}</span>
-        {% endfor %}
-        <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center"/>
-    {% endfor %}
+                 <form action="" method="post">
+                 {% with operation="Delete" %}
+                 {% endwith %}
+                 <input type="hidden" name="pk" value="3"/>
+                 <input type="hidden" name="operation" value="Delete"/>
+                 <input type="submit" value="◇" style="width:34px;color: cadetblue;
+                 background-color: white;text-align: right;border:none;
+                 float:right;font-size: x-large;"/>
+
+                 <a href="change.html" style="color: cadetblue;top:2000px;
+                 text-decoration: none;float:right;
+                 text-align: right;border:none;
+                 font-size: x-large;">◆</a><!--change-->
+
+                 <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" /><!--横线-->
+                </form>
+
+               <span>{{ foo }}</span><!--shuju-->
+         {% endfor %}
+  {% endfor %}
 </div>
 
 </body>
