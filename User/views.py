@@ -220,6 +220,7 @@ itchat_user_dict_reverse = {}
 
 @itchat.msg_register(TEXT)
 def text_reply(msg):
+    print(msg['FromUserName'])
     if msg['FromUserName'] == msg['ToUserName']:
         msgdata = json.loads(msg['Text'])
         res = {}
@@ -250,12 +251,13 @@ def text_reply(msg):
             send(json.dumps(res), msg['FromUserName'])
 
 
-itchat.auto_login(hotReload=True)
-client="ddd"
-
+itchat.auto_login(hotReload=False)
+client=itchat.search_friends(nickName='一个亿')[0]['UserName']
+a=itchat.search_friends(nickName='一个亿')
 def job():
     while True:
         print("I am working...")
+        send(json.dumps({'a':2}),client)
         date_now = datetime.datetime.now().timestamp()
         sche_all = Schedule.objects.all()
         for sche in sche_all:
