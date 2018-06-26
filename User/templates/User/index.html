@@ -1,6 +1,5 @@
 {% load static %}
-<<<<<<< Updated upstream
-<link href="/static/User/style.css" rel="stylesheet" type="text/css" />
+<link href="{% static "User/style.css" %}" rel="stylesheet" type="text/css"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,166 +8,100 @@
     <meta name="keywords" content="">
     <link href="" rel="stylesheet">
     <style type="text/css">
-=======
-<!DOCTYPE HTML>
-<!--
-	Directive by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Directive by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{% static "User/assets/css/main.css" %}" />
-	</head>
-    <body>
-	<!---
-	<body class="is-preload">
-		<footer class="major container medium">
-			<ul class="actions special">
-				<li><a href="#" class="button">Join our crew</a></li>
-			</ul>
-		</footer>
-	-->
-		<!-- Header -->
-			<div id="header">
-				<span class="logo icon fa-paper-plane-o"></span>
-				<h1>Simple Time Gyro Manager</h1>
-				<p>A website designed for manage people's time gyro.</p>
-				<br />
-				<ul class="" >
-						<li><a href="{% url "login" %}" class="button">Sign in</a></li>
-                    <br/>
-                        <li><a href="{% url "register" %}" class="button">Sign up</a></li>
-					</ul>
-			</div>
->>>>>>> Stashed changes
 
-    input{
-        width: 160px;
-        border: 1px solid cadetblue;
-        border-radius: 70px;
-        height: 30px;
-        float: left;
-        padding:0 0 0 15px;
-        outline: none;
-    }
-</style>
+        input {
+            width: 160px;
+            border: 1px solid #4eb980;
+            border-radius: 70px;
+            height: 30px;
+            float: left;
+            padding: 0 0 0 15px;
+            outline: none;
+        }
+    </style>
 
-<<<<<<< Updated upstream
 </head>
-<body>
 
-<!--头像-->
-<div class="imgtest" style="left: 196px; position: absolute; top:60px; color: cadetblue;
+<body>
+{% for foo in ge %}
+    <p>{{ foo }}</p>
+{% endfor %}
+
+<div class="imgtest" style="left: 196px; position: absolute; top:60px; color: #4eb980;
         width: 75px;height: 75px; border-radius: 75px; text-decoration: none;
-        background-color: cadetblue;outline: none;border: none;">
- <figure>
-  <div>
-    <!--<img src="rin.jpeg" />-->
-    <!--头像出不来-->
-  </div>
- </figure>
+        background-color: #4eb980;color: white;outline: none;border: none;">
+    <figure>
+        <div>
+            <!--<img src="rin.jpeg" />-->
+            <!--头像出不来-->
+        </div>
+    </figure>
 </div>
+
 <!--名字-->
 <div style="color: cadetblue;left: 175px; position: absolute; top:122px;font-size: x-large; ">
     <p>username</p>
 </div>
-=======
-				<header class="major container medium">
-					<h2>We want to change people's method of time managing.</h2>
-					<!--
-					<p>Tellus erat mauris ipsum fermentum<br />
-					etiam vivamus nunc nibh morbi.</p>
-					-->
-				</header>
 
-				<div class="box alt container">
-					<section class="feature left">
-						<a href="#" class="image icon fa-signal"><img src="{% static "User/images/pic01.jpg" %}" alt="" /></a>
-						<div class="content">
-							<h3>Time Gyro Manage</h3>
-							<p>You can create, modify and delete everything you want to do.</p>
-						</div>
-					</section>
-					<section class="feature right">
-						<a href="#" class="image icon fa-code"><img src="{% static "User/images/pic02.jpg" %}" alt="" /></a>
-						<div class="content">
-							<h3>Teamwork Support</h3>
-							<p>You can invite teammate to join your Time Gyro, enjoy the high efficiency end effectiness.</p>
-						</div>
-					</section>
-					<section class="feature left">
-						<a href="#" class="image icon fa-mobile"><img src="{% static "User/images/pic03.jpg" %}" alt="" /></a>
-						<div class="content">
-							<h3>Accurate Notification</h3>
-							<p>You can use WeChat to receive the notification in time.</p>
-						</div>
-					</section>
-				</div>
->>>>>>> Stashed changes
+<form action="/search" method="post" target="_blank">
+    <div id="box" style="left: 1115px; position: absolute; top: 20px;">
+        <input type="text" name="q" placeholder="">
+    </div>
 
-<!--搜索-->
-<form action="" method="post" target="_blank">
-  <div id="box" style="left: 1115px; position: absolute; top: 20px;">
-      <input type="text" name="search" placeholder="">
-  </div>
-      {% with operation="Update" %}
-      {% endwith %}
-      <input type="hidden" name="pk" value="3"/>
-      <input type="hidden" name="operation" value="Update"/>
-      <input type="submit" value="" style="left: 1280px; position: absolute; top:27px; color: cadetblue;
+    <button type="submit" style="left: 1280px; position: absolute; top:27px; color: #4eb980;
         width: 18px;height: 18px; border-radius: 18px; text-decoration: none;
-        background-color: cadetblue;outline: none;border: none;"/>
+        background-color: #4eb980;color: white;outline: none;border: none;">
+    </button>
+
+      {% with operation="Add" %}
+      {% endwith %}
+        <form action="" method="get">
+            <input type="hidden" name="pk" value=""/>
+            <input type="hidden" name="operation" value="Update"/>
+            <input type="submit" value="+" style="left: 1280px; position: absolute; top:27px; color: cadetblue;
+            width: 18px;height: 18px; border-radius: 18px; text-decoration: none;
+            background-color: cadetblue;outline: none;border: none;"/>
+        </form>
 </form>
 
-<<<<<<< Updated upstream
-<!--三个按键-->
-<div>
-    <a href="" style="color:cadetblue;text-decoration: none;left: 211.5px; position: absolute; top: 550px;font-size: x-large;">+</a>
-    <a href="setting.html" style="color:cadetblue;text-decoration: none;left: 210px; position: absolute; top: 588.2px;font-size: large;">۞</a>
-    <a href="index.html" style="color:cadetblue;text-decoration: none;left: 213px; position: absolute; top: 610px;font-size: x-large;">■</a>
-</div>
-=======
-				<footer class="major container medium">
-					<h3>Get ready with our website</h3>
-					<p>Have a try with our website and you will find a new world.</p>
-					<ul class="actions special">
-						<li><a href="#" class="button">Join us now</a></li>
-					</ul>
-				</footer>
->>>>>>> Stashed changes
 
-<!--第一条横线-->
-<br><br><br><br><hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
-    <!--尝试传数据-->
+<h1 style="left: 280px; position: absolute; top: 108px;color:#4eb980;text-decoration: none;font-size: large;"></h1>
+
+<div>
+    <a href="create_schedule"
+       style="color:#4eb980;text-decoration: none;left: 211.5px; position: absolute; top: 550px;font-size: x-large;">+</a>
+    <a href="setting"
+       style="color:#4eb980;text-decoration: none;left: 210px; position: absolute; top: 588.2px;font-size: large;">۞</a>
+    <a href="/logout"
+       style="color:#4eb980;text-decoration: none;left: 213px; position: absolute; top: 610px;font-size: x-large;">■</a>
+</div>
+
+<br><br><br><br>
+<hr style="height:1px;border:none;border-top:1px solid #4eb980;width: 22cm;text-align: center"/>
+
+<!--尝试传数据-->
 <div id="datastyle" style="left: 354px;top:100px;">
-  {% for it,key in unitlist.items %}
-         <form action="" method="post">
-                 {% with operation="Delete" %}
-                 {% endwith %}
-                 <input type="hidden" name="pk" value="3"/>
-                 <input type="hidden" name="operation" value="Delete"/>
-                 <input type="submit" value="x" style="width:34px;color: cadetblue;background-color: white;text-align: left;border:none;float:right;font-size: large;"/>
-         </form>
-         <p>{{it.title}}</p>
-         {% for k,i in key.items%}
-             <p>{{ k }}:{{ i }}</p>
-         {% endfor %}
-         <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
-  {% endfor %}
+    {% for it in unitlist %}
+        <form action="" method="post">{% csrf_token %}
+                <input type="hidden" name="pk" value="{{ foo.pk }}"/>
+                <input type="hidden" name="operation" value="Delete"/>
+                <input type="submit" value="x"
+                       style="float:right;width:34px;color: cadetblue;
+                       background-color: white;text-align: left;
+                       border:none;font-size: large;"/>
+            </form>
+        <p>{{ it.title }}</p>
+        {% for foo in it.itemlist %}
+            <span>{{ foo }}</span>
+        {% endfor %}
+        <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center"/>
+    {% endfor %}
 </div>
 
 </body>
 </html>
 
 
-<<<<<<< Updated upstream
-=======
-					<p>Contact us using email.</p>
->>>>>>> Stashed changes
 
 
 
