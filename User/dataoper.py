@@ -5,6 +5,8 @@ from django.contrib import auth
 
 from Schedule.models import *
 
+from User.models import GyroUser
+
 """
 用户对象包含的内容:
 原生的username,email和扩展的schedule_created_count,schedule_attended_count,notice_count,gender,birthday
@@ -80,86 +82,30 @@ def user_exist(username):
         return False
 
 
-def create_schedule(title, desc, notify_time, start_time, end_time, creator, participator_count, type, user):
-    """
-    一个用户创建一个任务,最后一个你在注释里说明要用户对象还是用户名
-    :param title:
-    :param desc:
-    :param notify_time:
-    :param start_time:
-    :param end_time:
-    :param creator:
-    :param participator_count:
-    :param type:
-    :param user:
-    :return:
-    """
-    pass
-
-
-def delete_schedule(title, desc, notify_time, start_time, end_time, creator, participator_count, type, user):
-    """
-    用户创始人删除任务,最后一个你在注释里说明要用户对象还是用户名
-    :param title:
-    :param desc:
-    :param notify_time:
-    :param start_time:
-    :param end_time:
-    :param creator:
-    :param participator_count:
-    :param type:
-    :param user:
-    :return:
-    """
-    pass
-
-
-def change_schedule(title, desc, notify_time, start_time, end_time, creator, participator_count, type, user):
-    """
-    用户创始人修改任务,最后一个你在注释里说明要用户对象还是用户名
-    :param title:
-    :param desc:
-    :param notify_time:
-    :param start_time:
-    :param end_time:
-    :param creator:
-    :param participator_count:
-    :param type:
-    :param user:
-    :return:
-    """
-    pass
-
-
-def attend_sechedule(title, desc, notify_time, start_time, end_time, creator, participator_count, type, user):
-    """
-    用户参与任务
-    :param title:
-    :param desc:
-    :param notify_time:
-    :param start_time:
-    :param end_time:
-    :param creator:
-    :param participator_count:
-    :param type:
-    :param user:
-    :return:
-    """
-    pass
-
-
-def schedule_list_to_dict(schedule_list: List[Schedule]) -> Dict:
+def schedule_list_to_dict(schedule_list: List[Schedule]) -> list:
     """
     :param schedule_list:
     :return:
     形如{"个人事务":[{'pk':1,'title':'aaa'},etc],"工作":[{'pk':2,'title':'aab'},etc]}
     """
-    rd = {}
-    for i in schedule_list:
-        if i.type.type_name not in rd:
-            rd[i.type.type_name] = []
-        rd[i.type.type_name].append(
-            {'pk': i.pk, 'title': i.title, 'description': i.description, 'notify_time': i.notify_time,
-             'start_time': i.start_time, 'end_time': i.end_time, 'creator': i.creator,
-             'participator_count': i.participator_count, 'type': i.type})
-    return rd
+    unitlist = []
+    for schedule in schedule_list:
+        flag = False
+        for unit in unitlist:
+            if schedule.type.type_name == unit['title']:
+                unit['itemlist'].append({'title': schedule.title, 'pk': schedule.pk})
+                flag = True
+                break
+        if flag is not True:
+            unitlist.append(
+                {'title': schedule.type.type_name, 'itemlist': [{'title': schedule.title, 'pk': schedule.pk}]})
+    return unitlist
+
+
+def add_participate_unit(schedule_list: List[ScheduleParticipator]) -> dict:
+    itemlist = []
+    unit = {'title': 'participator', 'itemlist': []}
+    for schedule_part in schedule_list:
+        itemlist.append({'title': schedule_part.schedule.title, 'pk': schedule_part.schedule.pk})
+    unit['itemlist'] = itemlist
+    return unit
