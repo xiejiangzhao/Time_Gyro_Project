@@ -22,9 +22,6 @@
 
 </head>
 <body>
-{% for foo in ge %}
-<p>{{ foo }}</p>
-{% endfor %}
 
 <div class="imgtest" style="left: 196px; position: absolute; top:60px; color: cadetblue;
         width: 75px;height: 75px; border-radius: 75px; text-decoration: none;
@@ -57,15 +54,19 @@
 </div>
 
 <br><br><br><br><hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
-
     <!--尝试传数据-->
 <div id="datastyle" style="left: 354px;top:100px;">
-  {% for it in unitlist %}
-    <p>{{ it.title }}</p>
-    {% for foo in it.itemlist %}
-            <p>{{ foo }}</p>
-    {% endfor %}
-    <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
+  {% for it, key in unitlist.items%}
+      <p>{{it}}</p>
+         {% for k,i in key.items%}
+             <p>{{ k }}:{{ i }}</p>
+         {% endfor %}
+      <form action="views.html" method="post">
+          {% with operation="Delete" %}
+          {% endwith %}
+          <input type="submit" name="operation" value="x" style="width:38px;color: cadetblue;background-color: white;text-align: left;"/>
+      </form>
+      <br><br><hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
   {% endfor %}
 </div>
 
