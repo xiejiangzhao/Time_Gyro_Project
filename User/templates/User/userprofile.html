@@ -21,6 +21,7 @@
     </style>
 
 </head>
+
 <body>
 {% for foo in ge %}
     <p>{{ foo }}</p>
@@ -37,14 +38,30 @@
     </figure>
 </div>
 
-<form action="/search">
+<!--名字 数据没传-->
+<div style="color: cadetblue;left: 175px; position: absolute; top:122px;font-size: x-large; ">
+    <p>username</p>
+</div>
+<!--搜索框-->
+<form action="/search" method="post" target="_blank">
     <div id="box" style="left: 1115px; position: absolute; top: 20px;">
-        <input id="key" type="text" name="q" placeholder="">
+        <input type="text" name="q" placeholder="">
     </div>
+<!--搜索按钮，原来版本。试过input，目前还在试-->
     <button type="submit" style="left: 1280px; position: absolute; top:27px; color: #4eb980;
         width: 18px;height: 18px; border-radius: 18px; text-decoration: none;
         background-color: #4eb980;color: white;outline: none;border: none;">
     </button>
+<!--+按钮，在x基础上改的-->
+      {% with operation="Add" %}
+      {% endwith %}
+        <form action="" method="get">
+            <input type="hidden" name="pk" value=""/>
+            <input type="hidden" name="operation" value="Update"/>
+            <input type="submit" value="+" style="left: 1280px; position: absolute; top:27px; color: cadetblue;
+            width: 18px;height: 18px; border-radius: 18px; text-decoration: none;
+            background-color: cadetblue;outline: none;border: none;"/>
+        </form>
 </form>
 
 
@@ -65,18 +82,19 @@
 <!--尝试传数据-->
 <div id="datastyle" style="left: 354px;top:100px;">
     {% for it in unitlist %}
-        <p>{{ it.title }}</p>
-        {% for foo in it.itemlist %}
-            <span>{{ foo }}</span>
-            <form action="" method="post">{% csrf_token %}
+        <form action="" method="post">{% csrf_token %}
                 <input type="hidden" name="pk" value="{{ foo.pk }}"/>
                 <input type="hidden" name="operation" value="Delete"/>
                 <input type="submit" value="x"
-                       style="width:38px;color: cadetblue;background-color: white;text-align: left;"/>
+                       style="float:right;width:34px;color: cadetblue;
+                       background-color: white;text-align: left;
+                       border:none;font-size: large;"/>
             </form>
-            <br><br>
-            <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center"/>
+        <p>{{ it.title }}</p>
+        {% for foo in it.itemlist %}
+            <span>{{ foo }}</span>
         {% endfor %}
+        <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center"/>
     {% endfor %}
 </div>
 
