@@ -70,7 +70,7 @@
             <span>{{ foo }}</span>
             <form action="" method="post">{% csrf_token %}
                 <input type="hidden" name="pk" value="{{ foo.pk }}"/>
-                <input type="hidden" name="operation" value="Delete"/>
+                <input type="hidden" name="operation" value="Add"/>
                 <input type="submit" value="x"
                        style="width:38px;color: cadetblue;background-color: white;text-align: left;"/>
             </form>
