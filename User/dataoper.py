@@ -6,6 +6,7 @@ from django.contrib import auth
 from Schedule.models import *
 
 from User.models import GyroUser
+
 """
 用户对象包含的内容:
 原生的username,email和扩展的schedule_created_count,schedule_attended_count,notice_count,gender,birthday
@@ -81,74 +82,6 @@ def user_exist(username):
         return False
 
 
-def create_schedule(title, desc, notify_time, start_time, end_time, creator, participator_count, type, user):
-    """
-    一个用户创建一个任务,最后一个你在注释里说明要用户对象还是用户名
-    :param title:
-    :param desc:
-    :param notify_time:
-    :param start_time:
-    :param end_time:
-    :param creator:
-    :param participator_count:
-    :param type:
-    :param user:
-    :return:
-    """
-    pass
-
-
-def delete_schedule(title, desc, notify_time, start_time, end_time, creator, participator_count, type, user):
-    """
-    用户创始人删除任务,最后一个你在注释里说明要用户对象还是用户名
-    :param title:
-    :param desc:
-    :param notify_time:
-    :param start_time:
-    :param end_time:
-    :param creator:
-    :param participator_count:
-    :param type:
-    :param user:
-    :return:
-    """
-    pass
-
-
-def change_schedule(title, desc, notify_time, start_time, end_time, creator, participator_count, type, user):
-    """
-    用户创始人修改任务,最后一个你在注释里说明要用户对象还是用户名
-    :param title:
-    :param desc:
-    :param notify_time:
-    :param start_time:
-    :param end_time:
-    :param creator:
-    :param participator_count:
-    :param type:
-    :param user:
-    :return:
-    """
-    pass
-
-
-def attend_sechedule(title, desc, notify_time, start_time, end_time, creator, participator_count, type, user):
-    """
-    用户参与任务
-    :param title:
-    :param desc:
-    :param notify_time:
-    :param start_time:
-    :param end_time:
-    :param creator:
-    :param participator_count:
-    :param type:
-    :param user:
-    :return:
-    """
-    pass
-
-
 def schedule_list_to_dict(schedule_list: List[Schedule]) -> list:
     """
     :param schedule_list:
@@ -168,6 +101,11 @@ def schedule_list_to_dict(schedule_list: List[Schedule]) -> list:
                 {'title': schedule.type.type_name, 'itemlist': [{'title': schedule.title, 'pk': schedule.pk}]})
     return unitlist
 
-obj=GyroUser.objects.get(username='xiejiangzha')
-user_sche = Schedule.objects.filter(creator=obj)
-context = schedule_list_to_dict(user_sche)
+
+def add_participate_unit(schedule_list: List[ScheduleParticipator]) -> dict:
+    itemlist = []
+    unit = {'title': 'participator', 'itemlist': []}
+    for schedule_part in schedule_list:
+        itemlist.append({'title': schedule_part.schedule.title, 'pk': schedule_part.schedule.pk})
+    unit['itemlist'] = itemlist
+    return unit

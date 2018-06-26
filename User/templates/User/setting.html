@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Directive by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>Sign in</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="{% static "User/assets/css/main.css" %}"/>
+</head>
+<body>
+<div id="">
+    <div class="container medium">
+        <header class="major last">
+            <h2>Setting</h2>
+        </header>
+
+        <form method="post" action="">{% csrf_token %}
+            <div class="row">
+                <div class="col-6">
+                    <span class="text">Username:</span>
+                </div>
+                <div class="col-6">
+                    <input type="text" name="username" placeholder="{{ username }}"/>
+                </div>
+                <div class="col-6">
+                    <span class="text">Password:</span>
+                </div>
+                <div class="col-6">
+                    <input type="password" name="password" placeholder="Password"/>
+                </div>
+                <div class="col-6">
+                    <span class="text">Birthday:{{ birthday }}</span>
+                </div>
+                <div class="col-6">
+                    <input type="date" name="birthday" placeholder=""/>
+                </div>
+                <div class="col-6">
+                    <span class="text">Gender:{{ gender }}</span>
+                </div>
+                <div class="col-6">
+                    <select name="gender">
+                        <option value="1">Male</option>
+                        <option value="0">Female</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <ul class="actions special">
+                        <li><input type="submit" value="Update"/></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+
+        <ul class="icons">
+            <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+            <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+            <li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+            <li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+        </ul>
+
+        <ul class="copyright">
+            <li>&copy; Gyro. All rights reserved.</li>
+            <li>
+        </ul>
+
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="{% static "User/assets/js/jquery.min.js" %}"></script>
+<script src="{% static "User/assets/js/browser.min.js" %}"></script>
+<script src="{% static "User/assets/js/breakpoints.min.js" %}"></script>
+<script src="{% static "User/assets/js/util.js" %}"></script>
+<script src="{% static "User/assets/js/main.js" %}"></script>
+
+</body>
+</html>

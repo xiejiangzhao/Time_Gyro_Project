@@ -56,7 +56,19 @@ def userprofile(request, username):
         unit2 = {'title': 'unit2', 'itemlist': itemlist}
         unitlist = [unit1, unit2]
         unitlist = schedule_list_to_dict(user_sche)
+        part_data = add_participate_unit(ScheduleParticipator.objects.filter(participator=request.user))
+        if len(part_data['itemlist']) > 0:
+            unitlist.append(part_data)
         return render(request, 'User/userprofile.html', {'unitlist': unitlist})
+    elif request.method == 'POST':
+        oper = request.POST.get('operation')
+        pk = request.POST.get('pk')
+        if oper == 'Delete':
+            if Schedule.objects.get(pk=pk).creator == request.user:
+                Schedule.objects.get(pk=pk).delete()
+            else:
+                ScheduleParticipator.objects.get(participator=GyroUser.objects.get(username=request.user.username),schedule=Schedule.objects.get(pk=pk)).delete()
+            return redirect('userprofile', username=request.user.username)
 
 
 def scheduleprofile(request, schedulepk):
@@ -107,6 +119,46 @@ def create_schedule(request, username):
 def login_out(request):
     logout(request)
     return redirect('index')
+
+
+def setting(request, username):
+    if request.method == 'GET':
+        context = {'username': request.user.username, 'gender': 'Male' if request.user.gender is True else 'Female',
+                   'birthday': request.user.birthday}
+        return render(request, 'User/setting.html', context)
+    else:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        gender = request.POST.get('gender')
+        birthday = request.POST.get('birthday')
+        userobj = GyroUser.objects.get(username=request.user.username)
+        if password != '':
+            userobj.set_password(password)
+        userobj.gender = gender
+        userobj.birthday = birthday
+        userobj.save()
+        context = {'username': request.user.username, 'gender': 'Male' if gender is True else 'Female',
+                   'birthday': birthday}
+        return render(request, 'User/setting.html', context)
+
+
+@login_required
+def search(request):
+    if request.method == 'GET':
+        searchdata = request.GET.get('q', '')
+        if searchdata == '':
+            return None
+        else:
+            datalist = Schedule.objects.filter(title__contains=searchdata)
+            unitlist = schedule_list_to_dict(datalist)
+            return render(request, 'User/search.html', {'unitlist': unitlist})
+    elif request.method == 'POST':
+        oper = request.POST.get('operation')
+        pk = request.POST.get('pk')
+        if oper == 'Add':
+            ScheduleParticipator.objects.create(schedule=Schedule.objects.get(pk=pk),participator=GyroUser.objects.get(username=request.user.username))
+            return redirect('userprofile', username=request.user.username)
+    return render(request, 'User/search.html')
 
 
 def test(request):
