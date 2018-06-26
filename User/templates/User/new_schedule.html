@@ -7,7 +7,7 @@
 -->
 <html>
 	<head>
-		<title>Sign in</title>
+		<title>Create new schedule</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{% static "User/assets/css/main.css" %}" />
@@ -16,36 +16,37 @@
 			<div id="">
 				<div class="container medium">
 					<header class="major last">
-						<h2>Sign in to Gyro</h2>
+						<h2>Create new schedule</h2>
 					</header>
 
 					<form method="post" action="">{% csrf_token %}
 						<div class="row">
 							<div class="col-12">
-								<input type="text" name="username" placeholder="Name" />
+								<input type="text" name="title" placeholder="Title" />
 							</div>
 							<div class="col-12">
-								<input type="password" name="password" placeholder="Password" />
+								<input type="text" name="description" placeholder="Description" />
+							</div>
+                            <div class="col-12">
+								<input type="time" name="notify_time" placeholder="" />
+							</div>
+                            <div class="col-12">
+								<input type="date" name="start_time" placeholder="start_time" />
+							</div>
+                            <div class="col-12">
+								<input type="date" name="end_time" placeholder="end_time" />
+							</div>
+                            <div class="col-12">
+								<input type="text" name="type_name" placeholder="type_name" />
 							</div>
 							<div class="col-12">
 								<ul class="actions special">
-									<li><input type="submit" value="Sign in" /></li>
+									<li><input type="submit" value="Create" /></li>
 								</ul>
 							</div>
 						</div>
 					</form>
 
-					<ul class="icons">
-						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
-						<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
-					</ul>
-
-					<ul class="copyright">
-						<li>&copy; Gyro. All rights reserved.</li><li>
-					</ul>
 
 				</div>
 			</div>
