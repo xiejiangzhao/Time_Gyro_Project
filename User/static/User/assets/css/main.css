@@ -7,6 +7,15 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+@import url("font-awesome.min.css");
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,400italic,600,600italic,700,700italic");
+
+/*
+	Directive by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+*/
+
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
 pre, a, abbr, acronym, address, big, cite,
@@ -115,7 +124,7 @@ input, select, textarea {
 		-ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		border-bottom: dotted 1px;
-		color: #4eb980;
+		color: cadetblue;
 		text-decoration: none;
 	}
 
@@ -143,7 +152,7 @@ input, select, textarea {
 		line-height: 1.75em;
 		margin-bottom: 1em;
 		text-transform: uppercase;
-		text-align: center;
+		text-align: left;
 	}
 
 		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
@@ -152,7 +161,7 @@ input, select, textarea {
 		}
 
 	h2 {
-		font-size: 1.75em;
+		font-size: 1em;
 	}
 
 	h3 {
@@ -174,7 +183,7 @@ input, select, textarea {
 	hr {
 		border: 0;
 		border-top: solid 1px rgba(224, 224, 224, 0.75);
-		margin-bottom: 1.5em;
+		margin-bottom: 1em;
 	}
 
 	blockquote {
@@ -188,11 +197,11 @@ input, select, textarea {
 	.container {
 		margin: 0 auto;
 		max-width: 100%;
-		width: 51em;
+		width: 0em;
 	}
 
 		.container.medium {
-			width: 38.25em;
+			width: 38em;
 		}
 
 		@media screen and (max-width: 1280px) {
@@ -329,7 +338,7 @@ input, select, textarea {
 		}
 
 		.row > .col-6 {
-			width: 50%;
+			width: 100%;
 		}
 
 		.row > .off-6 {
@@ -1733,7 +1742,7 @@ input, select, textarea {
 				}
 
 				.row.aln-center {
-					justify-content: center;
+
 				}
 
 				.row.aln-right {
@@ -1745,7 +1754,7 @@ input, select, textarea {
 				}
 
 				.row.aln-middle {
-					align-items: center;
+
 				}
 
 				.row.aln-bottom {
@@ -1853,20 +1862,20 @@ input, select, textarea {
 				}
 
 				.row.gtr-0 {
-					margin-top: 0px;
-					margin-left: 0px;
+					margin-top: 1px;
+					margin-left:1px;
 				}
 
 					.row.gtr-0 > * {
-						padding: 0px 0 0 0px;
+						padding: 1px 1 1 1px;
 					}
 
 					.row.gtr-0.gtr-uniform {
-						margin-top: 0px;
+						margin-top: 1px;
 					}
 
 						.row.gtr-0.gtr-uniform > * {
-							padding-top: 0px;
+							padding-top: 1px;
 						}
 
 				.row.gtr-25 {
@@ -1959,7 +1968,7 @@ input, select, textarea {
 /* Section/Article */
 
 	section.special, article.special {
-		text-align: center;
+		text-align: left;
 	}
 
 	header {
@@ -1979,7 +1988,7 @@ input, select, textarea {
 			border-color: rgba(224, 224, 224, 0.75);
 			border-style: solid;
 			border-top-width: 1px;
-			margin-bottom: 6em;
+			margin-bottom: 0em;
 			padding: 4em 0;
 			position: relative;
 		}
@@ -2008,8 +2017,8 @@ input, select, textarea {
 
 			header.major p {
 				top: 0;
-				margin: 1.5em 0 0 0;
-				padding: 1.5em 1.5em 0 1.5em;
+				margin: 1em 0 0 0;
+				padding: 1em 1em 0 1em;
 				font-size: 1.5em;
 				line-height: 1.75em;
 				border-top: solid 1px rgba(224, 224, 224, 0.75);
@@ -2017,9 +2026,9 @@ input, select, textarea {
 			}
 
 			header.major.last {
-				border-bottom: 0;
-				margin-bottom: 0;
-				padding-bottom: 0;
+				border-bottom: 1px;
+				margin-bottom:  1px;
+				padding-bottom:  1px;
 			}
 
 				header.major.last:after {
@@ -2070,7 +2079,7 @@ input, select, textarea {
 		font-size: 0.8em;
 		font-weight: 700;
 		letter-spacing: 0.125em;
-		line-height: 1.75em;
+		line-height: 1em;
 		text-transform: uppercase;
 		margin: 0 0 0.5em 0;
 	}
@@ -2095,9 +2104,9 @@ input, select, textarea {
 		color: inherit;
 		display: block;
 		outline: 0;
-		padding: 0.75em;
+		padding: 0em;
 		text-decoration: none;
-		width: 100%;
+		width: 10%;
 		opacity: 1;
 	}
 
@@ -2107,7 +2116,7 @@ input, select, textarea {
 		select:focus,
 		textarea:focus {
 			background: rgba(224, 224, 224, 0.15);
-			border-color: #4eb980;
+			border-color: cadetblue;
 		}
 
 	input[type="text"],
@@ -2140,14 +2149,14 @@ input, select, textarea {
 		}
 
 	textarea {
-		padding: 0.5em 0.75em;
+		padding: 1000em 0.75em;
 	}
 
 	::-webkit-input-placeholder {
 		color: inherit;
 		opacity: 0.5;
 		position: relative;
-		top: 3px;
+		top: 1px;
 	}
 
 	:-moz-placeholder {
@@ -2333,7 +2342,7 @@ input, select, textarea {
 		}
 
 			ul.actions.stacked li {
-				padding: 1.25em 0 0 0;
+				padding: 1em 0 0 0;
 			}
 
 				ul.actions.stacked li:first-child {
@@ -2568,7 +2577,7 @@ input, select, textarea {
 		input[type="reset"].fit,
 		input[type="button"].fit,
 		.button.fit {
-			width: 100%;
+			width: 50%;
 		}
 
 		input[type="submit"].small,
@@ -2727,7 +2736,7 @@ input, select, textarea {
 
 			#header a:hover {
 				border-bottom-color: transparent;
-				color: #4eb980;
+				color: cadetblue;
 			}
 
 		#header strong, #header b {
@@ -2747,7 +2756,7 @@ input, select, textarea {
 		}
 
 		#header .logo {
-			background: #4eb980;
+			background: cadetblue;
 			border-radius: 100%;
 			color: #ffffff;
 			cursor: default;
@@ -2780,7 +2789,7 @@ input, select, textarea {
 
 	#footer {
 		background-attachment: scroll;
-		background-color: #4eb980;
+		background-color: cadetblue;
 		background-image: url("images/bottom-3200.svg");
 		background-position: top center;
 		background-repeat: repeat-x;
@@ -2897,7 +2906,7 @@ input, select, textarea {
 		#main:before {
 			background: rgba(224, 224, 224, 0.75);
 			content: '';
-			height: 100%;
+			height: 50%;
 			left: 50%;
 			position: absolute;
 			top: 0;
@@ -2988,8 +2997,8 @@ input, select, textarea {
 		/* Box */
 
 			.box {
-				padding: 2.5em;
-				margin-bottom: 4em;
+				padding: 0em;
+				margin-bottom: 0em;
 			}
 
 		/* Feature */

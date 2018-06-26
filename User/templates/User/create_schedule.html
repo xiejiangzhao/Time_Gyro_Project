@@ -1,7 +1,12 @@
 {% load static %}
 <link href="{% static "User/style.css" %}" rel="stylesheet" type="text/css"/>
 <!DOCTYPE HTML>
-<html lang="en">
+<!--
+	Directive by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
 <head>
     <title>CREATE NEW SCHEDULE</title>
     <meta charset="utf-8"/>
@@ -12,7 +17,7 @@
 <div id="">
     <div class="container medium">
         <header class="major last">
-            <h2>POLISH NEW SCHEDULE</h2>
+            <h2>CREATE NEW SCHEDULE</h2>
         </header>
 
         <form method="post" action="">{% csrf_token %}
@@ -20,36 +25,21 @@
                 <div class="col-6" style="left:10px">
                     <span style="left:10px" class="text">Title:</span>
                 </div>
-                <div  style="left:10px;">
+                <div class="col-6" style="left:10px;">
                     <input style="height: 50px;width: 900px;" type="text" name="username" placeholder="{{ username }}"/>
                 </div>
                 <div class="col-6" >
                     <span style="left:10px" class="text">Text:</span>
                 </div>
-                <div  style="left:10px;">
-                    <input style="height: 500px; width: 900px;" type="text" name="password" placeholder=""/>
+                <div class="col-6" style="left:10px;">
+                    <input style="height: 900px;width: 900px;padding-left:1px;padding-top: 1px;" type="text" name="password" placeholder=""/>
                 </div>
 
-                <div style="left:0px;">
+                <div class="col-12" style="left:0px;">
                     <ul class="actions special">
-                        {% with operation="Update" %}
-                        {% endwith %}
-                        <input type="hidden" name="pk" value="{{ foo.pk }}"/>
-                        <input type="hidden" name="operation" value="Update"/>
-                        <li><input type="submit" value="UPDATE"/></li>
+                        <li><input type="submit" value="CREATE"/></li>
                     </ul>
                 </div>
-
-                <div style="left:1000px;">
-                    <ul class="actions special">
-                        {% with operation="Delete" %}
-                        {% endwith %}
-                        <input type="hidden" name="pk" value="{{ foo.pk }}"/>
-                        <input type="hidden" name="operation" value="Delete"/>
-                        <li><input type="submit" value="DELETE"/></li>
-                    </ul>
-                </div>
-
             </div>
         </form>
 

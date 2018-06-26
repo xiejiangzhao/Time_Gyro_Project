@@ -44,17 +44,17 @@
     <div id="box" style="left: 1115px; position: absolute; top: 20px;">
         <input id="key" type="text" name="q" placeholder="">
     </div>
-    <button type="submit" style="left: 1280px; position: absolute; top:27px; color: #4eb980;
+    <button type="submit" style="left: 1280px; position: absolute; top:27px; color: cadetblue;
         width: 18px;height: 18px; border-radius: 18px; text-decoration: none;
-        background-color: #4eb980;color: white;outline: none;border: none;">
+        background-color: cadetblue;color: white;outline: none;border: none;">
     </button>
 </form>
 
 <!--三个按键-->
 <div>
-    <a href="create_schedule" style="color:cadetblue;text-decoration: none;left: 211.5px; position: absolute; top: 550px;font-size: x-large;">+</a>
-    <a href="setting" style="color:cadetblue;text-decoration: none;left: 210px; position: absolute; top: 588.2px;font-size: large;">۞</a>
-    <a href="logout" style="color:cadetblue;text-decoration: none;left: 213px; position: absolute; top: 610px;font-size: x-large;">■</a>
+    <a href="" style="color:cadetblue;text-decoration: none;left: 211.5px; position: absolute; top: 550px;font-size: x-large;">+</a>
+    <a href="setting.html" style="color:cadetblue;text-decoration: none;left: 210px; position: absolute; top: 588.2px;font-size: large;">۞</a>
+    <a href="index.html" style="color:cadetblue;text-decoration: none;left: 213px; position: absolute; top: 610px;font-size: x-large;">■</a>
 </div>
 
     <!--尝试传数据-->
@@ -64,10 +64,10 @@
          <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
          {% for foo in it.itemlist %}
 
-                 <form action="" method="post">
+                 <form action="scheduleprofile.html" method="post">
                  {% with operation="Delete" %}
                  {% endwith %}
-                 <input type="hidden" name="pk" value="3"/>
+                 <input type="hidden" name="pk" value="{{ foo.pk }}"/>
                  <input type="hidden" name="operation" value="Delete"/>
                  <input type="submit" value="◇" style="width:34px;color: cadetblue;background-color: white;text-align: right;border:none;float:bottom;float:right;font-size: x-large;"/>
 
