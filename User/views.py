@@ -217,15 +217,17 @@ def test(request):
     unitlist = [unit1, unit2]
     return render(request, 'User/ui.html', {'unitlist': unitlist})
 
-@itchat.msg_register(TEXT)
-def text_reply(msg):
-    print("get"+msg['Text'])
-    send('我是机器人', msg['ToUserName'])
-itchat.auto_login(hotReload=True)
-itchat.run()
 def job():
     while True:
         print("I am working...")
+
+        @itchat.msg_register(TEXT)
+        def text_reply(msg):
+            print("get" + msg['Text'])
+            send('我是机器人', msg['ToUserName'])
+
+        itchat.auto_login(hotReload=True)
+        itchat.run()
         date_now = datetime.datetime.now()
         sche_all = Schedule.objects.all()
         for sche in sche_all:
