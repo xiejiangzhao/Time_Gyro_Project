@@ -1,0 +1,62 @@
+{% load static %}
+<link href="{% static "User/assets/css/main.css" %}" rel="stylesheet" type="text/css"/>
+<!DOCTYPE HTML>
+<!--
+	Directive by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>CREATE NEW SCHEDULE</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content=" initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="{% static "style.css" %}"/>
+</head>
+<body>
+<div id="">
+    <div class="container medium">
+        <header class="major last">
+            <h2>CREATE NEW SCHEDULE</h2>
+        </header>
+
+        <form method="post" action="">{% csrf_token %}
+            <div class="row">
+                <div class="col-6" style="left:10px">
+                    <span style="left:10px" class="text">Title:</span>
+                </div>
+                <div class="col-6" style="left:10px;">
+                    <input style="height: 50px;width: 900px;" type="text" name="username" placeholder="{{ username }}"/>
+                </div>
+                <div class="col-6" >
+                    <span style="left:10px" class="text">Text:</span>
+                </div>
+                <div class="col-6" style="left:10px;">
+                    <input style="height: 900px;width: 900px;padding-left:1px;padding-top: 1px;" type="text" name="password" placeholder=""/>
+                </div>
+
+                <div class="col-12" style="left:0px;">
+                    <ul class="actions special">
+                        <li><input type="submit" value="CREATE"/></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+
+        <ul class="copyright" style="text-align: left;">
+            <li>&copy; Gyro. All rights reserved.</li>
+            <li>
+        </ul>
+
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="{% static "User/assets/js/jquery.min.js" %}"></script>
+<script src="{% static "User/assets/js/browser.min.js" %}"></script>
+<script src="{% static "User/assets/js/breakpoints.min.js" %}"></script>
+<script src="{% static "User/assets/js/util.js" %}"></script>
+<script src="{% static "User/assets/js/main.js" %}"></script>
+
+</body>
+</html>
