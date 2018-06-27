@@ -16,9 +16,7 @@ import json
 
 
 def index(request):
-    unitlist = {'van': {'name': 'van', 'age': '24'}, 'banana': {'name': 'banana', 'age': '9527'},
-                'bili': {'name': 'bili', 'age': '123'}, 'leijun': {'name': 'are you ok', 'age': '40'}}
-    return render(request, 'User/index.html', {'unitlist': unitlist})
+    return render(request, 'User/index.html')
 
 
 def login_view(request):
@@ -94,14 +92,20 @@ def scheduleprofile(request, schedulepk):
         elif oper == 'Update':
             title = request.POST.get('title')
             desc = request.POST.get('description')
-            notify_time = datetime.timedelta(request.POST.get('notify_time'))
+            notify_time = datetime.timedelta(days=int(request.POST.get('notify_day')),hours=int(request.POST.get('notify_hour')))
             start_time = request.POST.get('start_time')
             end_time = request.POST.get('end_time')
             creator = request.user
-            type = ScheduleType.objects.create(type_name=request.POST.get('type_name'))
-            Schedule.objects.get(pk=pk).update(title=title, description=desc, notify_time=notify_time,
-                                               start_time=start_time,
-                                               end_time=end_time, creator=creator, type=type)
+            type = ScheduleType.objects.get_or_create(type_name=request.POST.get('type_name'))
+            sche=Schedule.objects.get(pk=pk)
+            sche.title=title
+            sche.description = desc
+            sche.title = title
+            sche.notify_time=notify_time
+            sche.start_time=start_time
+            sche.end_time=end_time
+            sche.type=type
+            sche.save()
             return redirect('userprofile', username=request.user.username)
 
 
@@ -155,7 +159,9 @@ def search(request):
     if request.method == 'GET':
         searchdata = request.GET.get('q', '')
         if searchdata == '':
-            return None
+            datalist = Schedule.objects.all()
+            unitlist = schedule_list_to_dict(datalist)
+            return render(request, 'User/search.html', {'unitlist': unitlist, 'username': request.user.username})
         else:
             datalist = Schedule.objects.filter(title__contains=searchdata)
             unitlist = schedule_list_to_dict(datalist)
@@ -187,6 +193,9 @@ def schedule_view(request, schedule_pk):
     else:
         oper = request.POST.get('operation')
         if oper == 'Delete':
+            tmp = ScheduleParticipator.objects.filter(schedule=Schedule.objects.get(pk=schedule_pk))
+            for i in tmp:
+                i.delete()
             Schedule.objects.get(pk=schedule_pk).delete()
             return redirect('userprofile', username=request.user.username)
         elif oper == 'Update':
@@ -198,95 +207,96 @@ def schedule_view(request, schedule_pk):
             end_time = request.POST.get('end_time')
             creator = request.user
             type = ScheduleType.objects.create(type_name=request.POST.get('type_name'))
-            Schedule.objects.get(pk=schedule_pk).update(title=title, description=desc, notify_time=notify_time,
-                                                        start_time=start_time,
-                                                        end_time=end_time, creator=creator, type=type)
+            sche = Schedule.objects.get(pk=schedule_pk)
+            sche.title = title
+            sche.description = desc
+            sche.title = title
+            sche.notify_time = notify_time
+            sche.start_time = start_time
+            sche.end_time = end_time
+            sche.type = type
+            sche.save()
             return redirect('userprofile', username=request.user.username)
 
 
-itchat_user_dict = {}
-itchat_user_dict_reverse = {}
-itchat.auto_login(hotReload=False)
-client = itchat.search_friends(nickName='一个亿')[0]['UserName']
-a = itchat.search_friends(nickName='一个亿')
+def wechat_module():
+    itchat_user_dict = {}
+    itchat_user_dict_reverse = {}
+    itchat.auto_login(hotReload=False)
+    client = itchat.search_friends(nickName='一个亿')[0]['UserName']
+    a = itchat.search_friends(nickName='一个亿')
 
+    @itchat.msg_register(TEXT)
+    def text_reply(msg):
+        print(msg['FromUserName'])
+        if msg['FromUserName'] == client:
+            msgdata = json.loads(msg['Text'])
+            res = {}
+            if msgdata['MessageType'] == 1:
+                res['MessageType'] = 1
+                res['ToUserName'] = msgdata['FromUserName']
+                if authenticate(msgdata['User'], msgdata['Password']):
+                    res['AuthenticationResult'] = True
+                    itchat_user_dict[msgdata['FromUserName']] = msgdata['User']
+                    itchat_user_dict_reverse[msgdata['User']] = msgdata['FromUserName']
+                else:
+                    res['AuthenticationResult'] = False
+                print("Msg to client")
+                print(res)
+                send(json.dumps(res), client)
+                print(itchat_user_dict)
+            elif msgdata['MessageType'] == 2:
+                res['MessageType'] = 2
+                res['Message'] = ""
+                res['ToUserName'] = msgdata['FromUserName']
+                username = itchat_user_dict[msgdata['FromUserName']]
+                user_sche = Schedule.objects.filter(creator=GyroUser.objects.get(username=username))
+                unitlist = schedule_list_to_dict(user_sche)
+                part_data = add_participate_unit(
+                    ScheduleParticipator.objects.filter(participator=GyroUser.objects.get(username=username)))
+                if len(part_data['itemlist']) > 0:
+                    unitlist.append(part_data)
+                for unit in unitlist:
+                    res['Message'] += unit['title'] + ':'
+                    for item in unit['itemlist']:
+                        res['Message'] += item['title'] + ','
+                print("Msg to client")
+                print(res)
+                send(json.dumps(res), msg['FromUserName'])
 
-@itchat.msg_register(TEXT)
-def text_reply(msg):
-    print(msg['FromUserName'])
-    if msg['FromUserName'] == client:
-        msgdata = json.loads(msg['Text'])
-        res = {}
-        if msgdata['MessageType'] == 1:
-            res['MessageType'] = 1
-            res['ToUserName'] = msgdata['FromUserName']
-            if authenticate(msgdata['User'], msgdata['Password']):
-                res['AuthenticationResult'] = True
-                itchat_user_dict[msgdata['FromUserName']] = msgdata['User']
-                itchat_user_dict_reverse[msgdata['User']] = msgdata['FromUserName']
-            else:
-                res['AuthenticationResult'] = False
-            print("Msg to client")
-            print(res)
-            send(json.dumps(res), client)
-            print(itchat_user_dict)
-        elif msgdata['MessageType'] == 2:
-            res['MessageType'] = 2
-            res['Message'] = ""
-            res['ToUserName'] = msgdata['FromUserName']
-            username = itchat_user_dict[msgdata['FromUserName']]
-            user_sche = Schedule.objects.filter(creator=GyroUser.objects.get(username=username))
-            unitlist = schedule_list_to_dict(user_sche)
-            part_data = add_participate_unit(
-                ScheduleParticipator.objects.filter(participator=GyroUser.objects.get(username=username)))
-            if len(part_data['itemlist']) > 0:
-                unitlist.append(part_data)
-            for unit in unitlist:
-                res['Message'] += unit['title'] + ':'
-                for item in unit['itemlist']:
-                    res['Message'] += item['title'] + ','
-            print("Msg to client")
-            print(res)
-            send(json.dumps(res), msg['FromUserName'])
-
-
-def job():
-    while True:
-        print("Gyro Wechat server is working")
-        date_now = datetime.datetime.now().timestamp()
-        sche_all = Schedule.objects.all()
-        for sche in sche_all:
-            if date_now >= (sche.end_time - sche.notify_time).timestamp():
-                print('Delete', sche.title, sche.pk)
-                res = {'MessageType': 2}
-                try:
-                    res['ToUserName'] = itchat_user_dict_reverse[sche.creator.username]
-                except:
+    def job():
+        while True:
+            print("Gyro Wechat server is working")
+            date_now = datetime.datetime.now().timestamp()
+            sche_all = Schedule.objects.all()
+            for sche in sche_all:
+                if date_now >= (sche.end_time - sche.notify_time).timestamp():
+                    print('Delete', sche.title, sche.pk)
+                    res = {'MessageType': 2}
+                    try:
+                        res['ToUserName'] = itchat_user_dict_reverse[sche.creator.username]
+                    except:
+                        tmp = ScheduleParticipator.objects.filter(schedule=sche)
+                        for i in tmp:
+                            i.delete()
+                        sche.delete()
+                        continue
+                    res['Message'] = '任务提醒:' + sche.title
+                    print("Msg to client")
+                    print(res)
+                    send(json.dumps(res), client)
                     tmp = ScheduleParticipator.objects.filter(schedule=sche)
                     for i in tmp:
                         i.delete()
                     sche.delete()
-                    continue
-                res['Message'] = '任务提醒:' + sche.title
-                print("Msg to client")
-                print(res)
-                send(json.dumps(res), client)
-                tmp = ScheduleParticipator.objects.filter(schedule=sche)
-                for i in tmp:
-                    i.delete()
-                sche.delete()
-        time.sleep(10)
+            time.sleep(10)
 
+    def mytime():
+        itchat.run()
 
-def coloregg(request):
-    return render(request, 'User/coloregg.html')
+    t = threading.Thread(target=job, name='it')
+    v = threading.Thread(target=mytime, name='it1')
+    v.start()
+    t.start()
 
-
-def mytime():
-    itchat.run()
-
-
-t = threading.Thread(target=job, name='it')
-v = threading.Thread(target=mytime, name='it1')
-v.start()
-t.start()
+#wechat_module()

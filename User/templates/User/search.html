@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Search Result</title>
+    <link rel="shortcut  icon" href="{% static "User/favicon.ico" %}" type="image/x-icon" />
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -60,6 +62,9 @@
     </figure>
 </div>
 
+<div style="color: #5b5b5b;left: 169px; position: absolute; top:150px;font-size: x-large; ">
+    <p>{{ username }}</p>
+</div>
 <form action="/search">
     <div id="box" style="left: 1115px; position: absolute; top: 20px;">
         <input id="key" type="text" name="q" placeholder="">
