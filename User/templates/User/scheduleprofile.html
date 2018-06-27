@@ -1,4 +1,5 @@
 {% load static %}
+<link href="/User/assets/css/main.css" rel="stylesheet" type="text/css" />
 <!DOCTYPE HTML>
 <!--
 	Directive by HTML5 UP
@@ -7,7 +8,7 @@
 -->
 <html>
 <head>
-    <title>Create new schedule</title>
+    <title>Polish your schedule</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="{% static "User/assets/css/main.css" %}"/>
@@ -16,7 +17,7 @@
 <div id="">
     <div class="container medium">
         <header class="major last">
-            <h2>Create new schedule</h2>
+            <h2>Polish your schedule</h2>
         </header>
 
         <form method="post" action="">{% csrf_token %}
@@ -63,9 +64,18 @@
                 <div class="col-6">
                     <input type="text" name="type_name" placeholder="{{ type }}"/>
                 </div>
-                <div class="col-12">
+                <div class="col-7">
                     <ul class="actions special">
-                        <li><input type="submit" value="Create"/></li>
+                        <input type="hidden" name="pk" value="{{ foo.pk }}"/>
+                        <input type="hidden" name="operation" value="Update"/>
+                        <input type="submit" value="Update"/>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="actions special">
+                        <input type="hidden" name="pk" value="{{ foo.pk }}"/>
+                        <input type="hidden" name="operation" value="Delete"/>
+                        <input type="submit" value="Delete"/>
                     </ul>
                 </div>
             </div>

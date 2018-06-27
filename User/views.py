@@ -3,17 +3,18 @@ from User.dataoper import *
 from Schedule.models import *
 from django.contrib.auth.decorators import login_required
 import datetime
-import schedule
+#import schedule
 import time
 import threading
 # Create your views here.
 from django.http import HttpResponse
 
+"""
 import itchat
 from itchat.content import TEXT
 from itchat import send
 import json
-
+"""
 
 def index(request):
     unitlist = {'van': {'name': 'van', 'age': '24'}, 'banana': {'name': 'banana', 'age': '9527'},
@@ -213,7 +214,7 @@ def test(request):
     unitlist = [unit1, unit2]
     return render(request, 'User/ui.html', {'unitlist': unitlist})
 
-
+"""
 itchat_user_dict = {}
 itchat_user_dict_reverse = {}
 
@@ -277,3 +278,4 @@ t = threading.Thread(target=job, name='it')
 v = threading.Thread(target=mytime, name='it1')
 v.start()
 t.start()
+"""
