@@ -3,8 +3,16 @@ from User.dataoper import *
 from Schedule.models import *
 from django.contrib.auth.decorators import login_required
 import datetime
+import schedule
+import time
+import threading
 # Create your views here.
 from django.http import HttpResponse
+
+import itchat
+from itchat.content import TEXT
+from itchat import send
+import json
 
 
 def index(request):
@@ -106,13 +114,14 @@ def create_schedule(request, username):
     else:
         title = request.POST.get('title')
         desc = request.POST.get('description')
-        notify_time=datetime.datetime.strftime(request.POST.get('notify_time'),'%H-%M-%S')
-        #notify_time = datetime.timedelta(hours=int(notify_time.hour),)
+        notify_time = datetime.timedelta(days=int(request.POST.get('notify_day')),
+                                         hours=int(request.POST.get('notify_hour')))
         start_time = request.POST.get('start_time')
         end_time = request.POST.get('end_time')
         creator = request.user
         type = ScheduleType.objects.create(type_name=request.POST.get('type_name'))
-        Schedule.objects.create(title=title, description=desc, notify_time=request.POST.get('notify_time'), start_time=start_time,
+        Schedule.objects.create(title=title, description=desc, notify_time=notify_time,
+                                start_time=start_time,
                                 end_time=end_time, creator=creator, type=type)
         return redirect('userprofile', username=username)
 
@@ -165,7 +174,37 @@ def search(request):
 
 
 def schedule_view(request, schedule_pk):
-    return render(request, 'User/scheduleprofile.html')
+    print(schedule_pk)
+    sche_obj = Schedule.objects.get(pk=schedule_pk)
+    if request.method == 'GET':
+        title = sche_obj.title
+        desc = sche_obj.description
+        notify_day = sche_obj.notify_time.days
+        start_time = sche_obj.start_time
+        end_time = sche_obj.end_time
+        creator = request.user.username
+        type = sche_obj.type.type_name
+        context = {'title': title, 'desc': desc, 'notify_day': notify_day ,
+                   'start_time': start_time, 'end_time': end_time, 'creator': creator, 'type': type}
+        return render(request, 'User/scheduleprofile.html', context)
+    else:
+        oper = request.POST.get('operation')
+        if oper == 'Delete':
+            Schedule.objects.get(pk=schedule_pk).delete()
+            return redirect('userprofile', username=request.user.username)
+        elif oper == 'Update':
+            title = request.POST.get('title')
+            desc = request.POST.get('description')
+            notify_time = datetime.timedelta(days=int(request.POST.get('notify_day')),
+                                             hours=int(request.POST.get('notify_hour')))
+            start_time = request.POST.get('start_time')
+            end_time = request.POST.get('end_time')
+            creator = request.user
+            type = ScheduleType.objects.create(type_name=request.POST.get('type_name'))
+            Schedule.objects.get(pk=schedule_pk).update(title=title, description=desc, notify_time=notify_time,
+                                                        start_time=start_time,
+                                                        end_time=end_time, creator=creator, type=type)
+            return redirect('userprofile', username=request.user.username)
 
 
 def test(request):
@@ -176,3 +215,25 @@ def test(request):
     unit2 = {'title': 'unit2', 'itemlist': itemlist}
     unitlist = [unit1, unit2]
     return render(request, 'User/ui.html', {'unitlist': unitlist})
+
+def job():
+    while True:
+        print("I am working...")
+
+        @itchat.msg_register(TEXT)
+        def text_reply(msg):
+            print("get" + msg['Text'])
+            send('我是机器人', msg['ToUserName'])
+
+        itchat.auto_login(hotReload=True)
+        itchat.run()
+        date_now = datetime.datetime.now()
+        sche_all = Schedule.objects.all()
+        for sche in sche_all:
+            if date_now >= sche.end_time:
+                print('dang')
+        time.sleep(10)
+
+
+t = threading.Thread(target=job, name='it')
+t.start()

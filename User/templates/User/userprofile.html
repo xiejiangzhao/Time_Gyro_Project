@@ -34,7 +34,6 @@
   </div>
  </figure>
 </div>
-
 <!--名字-->
 <div style="color: cadetblue;left: 175px; position: absolute; top:122px;font-size: x-large; ">
     <p>username</p>
@@ -58,32 +57,26 @@
     <a href="logout" style="color:cadetblue;text-decoration: none;left: 213px; position: absolute; top: 610px;font-size: x-large;">■</a>
 </div>
 
-<!--第一条横线-->
-<br><br><br><br><hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
     <!--尝试传数据-->
 <div id="datastyle" style="left: 354px;top:100px;color: cadetblue;">
   {% for it in unitlist %}
          <p>{{it.title}}</p>
-         {% for foo in it.itemlist%}
+         <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
+         {% for foo in it.itemlist %}
 
-                 <form action="" method="post">
+                 <form action="" method="post">{% csrf_token %}
                  {% with operation="Delete" %}
                  {% endwith %}
-                 <input type="hidden" name="pk" value="3"/>
+                 <input type="hidden" name="pk" value="{{ foo.pk }}"/>
                  <input type="hidden" name="operation" value="Delete"/>
-                 <input type="submit" value="◇" style="width:34px;color: cadetblue;
-                 background-color: white;text-align: right;border:none;
-                 float:right;font-size: x-large;"/>
+                 <input type="submit" value="◇" style="width:34px;color: cadetblue;background-color: white;text-align: right;border:none;float:bottom;float:right;font-size: x-large;"/>
 
-                 <a href="change.html" style="color: cadetblue;top:2000px;
-                 text-decoration: none;float:right;
-                 text-align: right;border:none;
-                 font-size: x-large;">◆</a><!--change-->
+                 <a href="/schedule/{{ foo.pk }}" style="color: cadetblue;top:2000px;text-decoration: none;float:right;text-align: right;border:none;font-size: x-large;">◆</a><!--change-->
 
-                 <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" /><!--横线-->
-                </form>
+                 <span>{{ foo }}</span>
 
-               <span>{{ foo }}</span><!--shuju-->
+                 <hr style="height:1px;border:none;border-top:1px solid cadetblue;width: 22cm;text-align: center" />
+              </form>
          {% endfor %}
   {% endfor %}
 </div>
