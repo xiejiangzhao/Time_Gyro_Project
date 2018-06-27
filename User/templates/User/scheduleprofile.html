@@ -7,7 +7,7 @@
 -->
 <html>
 <head>
-    <title>Create new schedule</title>
+    <title>Schedule</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="{% static "User/assets/css/main.css" %}"/>
@@ -49,13 +49,13 @@
                     <span class="text">start_time:</span>
                 </div>
                 <div class="col-6">
-                    <input type="date" name="start_time" placeholder="start_time"/>
+                    <input type="datetime-local" name="start_time" placeholder="start_time"/>
                 </div>
                 <div class="col-6">
                     <span class="text">end_time:</span>
                 </div>
                 <div class="col-6">
-                    <input type="date" name="end_time" placeholder="end_time"/>
+                    <input type="datetime-local" name="end_time" placeholder="end_time"/>
                 </div>
                 <div class="col-6">
                     <span class="text">type_name:</span>
@@ -63,9 +63,14 @@
                 <div class="col-6">
                     <input type="text" name="type_name" placeholder="{{ type }}"/>
                 </div>
-                <div class="col-12">
+                <div class="col-6">
                     <ul class="actions special">
-                        <li><input type="submit" value="Create"/></li>
+                        <li><input type="submit" name="operation" value="Update"/></li>
+                    </ul>
+                </div>
+                <div class="col-6">
+                    <ul class="actions special">
+                        <li><input type="submit" name="operation" value="Delete"/></li>
                     </ul>
                 </div>
             </div>

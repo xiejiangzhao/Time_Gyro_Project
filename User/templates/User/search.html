@@ -20,28 +20,31 @@
         }
     </style>
     <style type="text/css">
-        .imgtest{
-         overflow:hidden;
+        .imgtest {
+            overflow: hidden;
         }
-        .list_ul figcaption p{
-         font-size:12px;
-         color:#5b5b5b;
+
+        .list_ul figcaption p {
+            font-size: 12px;
+            color: #5b5b5b;
         }
-        .imgtest figure div{
-        display:inline-block;
-        width:75px;
-        height:75px;
-        border-radius:75px;
-        border:2px solid #5b5b5b;
-        border-style:solid;
-        overflow:hidden;
+
+        .imgtest figure div {
+            display: inline-block;
+            width: 75px;
+            height: 75px;
+            border-radius: 75px;
+            border: 2px solid #5b5b5b;
+            border-style: solid;
+            overflow: hidden;
         }
-        .imgtest img{
-        width:100%;
-        min-height:100%;
-        text-align:center;
+
+        .imgtest img {
+            width: 100%;
+            min-height: 100%;
+            text-align: center;
         }
-</style>
+    </style>
 </head>
 <body>
 {% for foo in ge %}
@@ -49,13 +52,13 @@
 {% endfor %}
 
 <!--头像-->
-   <div class="imgtest" style="left: 144px; position: absolute; top:60px;">
+<div class="imgtest" style="left: 144px; position: absolute; top:60px;">
     <figure>
-      <div>
-        <img src="mao.jpg"/>
-      </div>
+        <div>
+            <a href="\{{ username }}"><img src="../../static/User/mao.jpg"/></a>
+        </div>
     </figure>
-   </div>
+</div>
 
 <form action="/search">
     <div id="box" style="left: 1115px; position: absolute; top: 20px;">
@@ -80,7 +83,7 @@
 </div>
 
 <br><br><br><br>
-<hr style="height:1px;border:none;border-top:1px solid #4eb980;width: 22cm;text-align: center"/>
+<hr style="height:1px;border:none;border-top:1px solid #5b5b5b;width: 22cm;text-align: center"/>
 
 <!--list and add-->
 <div id="datastyle" style="left: 354px;top:100px;">

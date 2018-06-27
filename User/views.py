@@ -159,7 +159,7 @@ def search(request):
         else:
             datalist = Schedule.objects.filter(title__contains=searchdata)
             unitlist = schedule_list_to_dict(datalist)
-            return render(request, 'User/search.html', {'unitlist': unitlist})
+            return render(request, 'User/search.html', {'unitlist': unitlist, 'username': request.user.username})
     elif request.method == 'POST':
         oper = request.POST.get('operation')
         pk = request.POST.get('pk')
@@ -204,39 +204,36 @@ def schedule_view(request, schedule_pk):
             return redirect('userprofile', username=request.user.username)
 
 
-def test(request):
-    item1 = {'title': 'item1', 'pk': 1}
-    item2 = {'title': 'item2', 'pk': 2}
-    itemlist = [item1, item2]
-    unit1 = {'title': 'unit1', 'itemlist': itemlist}
-    unit2 = {'title': 'unit2', 'itemlist': itemlist}
-    unitlist = [unit1, unit2]
-    return render(request, 'User/ui.html', {'unitlist': unitlist})
-
-
 itchat_user_dict = {}
 itchat_user_dict_reverse = {}
+itchat.auto_login(hotReload=False)
+client = itchat.search_friends(nickName='一个亿')[0]['UserName']
+a = itchat.search_friends(nickName='一个亿')
 
 
 @itchat.msg_register(TEXT)
 def text_reply(msg):
     print(msg['FromUserName'])
-    if msg['FromUserName'] == msg['ToUserName']:
+    if msg['FromUserName'] == client:
         msgdata = json.loads(msg['Text'])
         res = {}
         if msgdata['MessageType'] == 1:
             res['MessageType'] = 1
+            res['ToUserName'] = msgdata['FromUserName']
             if authenticate(msgdata['User'], msgdata['Password']):
                 res['AuthenticationResult'] = True
                 itchat_user_dict[msgdata['FromUserName']] = msgdata['User']
                 itchat_user_dict_reverse[msgdata['User']] = msgdata['FromUserName']
             else:
                 res['AuthenticationResult'] = False
-            send(json.dumps(res), msg['FromUserName'])
+            print("Msg to client")
+            print(res)
+            send(json.dumps(res), client)
             print(itchat_user_dict)
         elif msgdata['MessageType'] == 2:
             res['MessageType'] = 2
             res['Message'] = ""
+            res['ToUserName'] = msgdata['FromUserName']
             username = itchat_user_dict[msgdata['FromUserName']]
             user_sche = Schedule.objects.filter(creator=GyroUser.objects.get(username=username))
             unitlist = schedule_list_to_dict(user_sche)
@@ -247,28 +244,42 @@ def text_reply(msg):
             for unit in unitlist:
                 res['Message'] += unit['title'] + ':'
                 for item in unit['itemlist']:
-                    res['Message'] += item.title + ','
+                    res['Message'] += item['title'] + ','
+            print("Msg to client")
+            print(res)
             send(json.dumps(res), msg['FromUserName'])
 
 
-itchat.auto_login(hotReload=False)
-client=itchat.search_friends(nickName='一个亿')[0]['UserName']
-a=itchat.search_friends(nickName='一个亿')
 def job():
     while True:
-        print("I am working...")
-        send(json.dumps({'a':2}),client)
+        print("Gyro Wechat server is working")
         date_now = datetime.datetime.now().timestamp()
         sche_all = Schedule.objects.all()
         for sche in sche_all:
             if date_now >= (sche.end_time - sche.notify_time).timestamp():
                 print('Delete', sche.title, sche.pk)
                 res = {'MessageType': 2}
-                res['ToUserName'] = itchat_user_dict_reverse[sche.creator.username]
-                res['Message']='任务提醒:'+sche.title
-                send(res,client)
+                try:
+                    res['ToUserName'] = itchat_user_dict_reverse[sche.creator.username]
+                except:
+                    tmp = ScheduleParticipator.objects.filter(schedule=sche)
+                    for i in tmp:
+                        i.delete()
+                    sche.delete()
+                    continue
+                res['Message'] = '任务提醒:' + sche.title
+                print("Msg to client")
+                print(res)
+                send(json.dumps(res), client)
+                tmp = ScheduleParticipator.objects.filter(schedule=sche)
+                for i in tmp:
+                    i.delete()
                 sche.delete()
         time.sleep(10)
+
+
+def coloregg(request):
+    return render(request, 'User/coloregg.html')
 
 
 def mytime():
