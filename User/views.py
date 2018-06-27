@@ -57,22 +57,19 @@ def userprofile(request, username):
         return redirect('userprofile', username=request.user.username)
     if request.method == 'GET':
         user_sche = Schedule.objects.filter(creator=request.user)
-        item1 = {'title': 'item1', 'pk': 1}
-        item2 = {'title': 'item2', 'pk': 2}
-        itemlist = [item1, item2]
-        unit1 = {'title': 'unit1', 'itemlist': itemlist}
-        unit2 = {'title': 'unit2', 'itemlist': itemlist}
-        unitlist = [unit1, unit2]
         unitlist = schedule_list_to_dict(user_sche)
         part_data = add_participate_unit(ScheduleParticipator.objects.filter(participator=request.user))
         if len(part_data['itemlist']) > 0:
             unitlist.append(part_data)
-        return render(request, 'User/userprofile.html', {'unitlist': unitlist})
+        return render(request, 'User/userprofile.html', {'unitlist': unitlist, 'username': request.user.username})
     elif request.method == 'POST':
         oper = request.POST.get('operation')
         pk = request.POST.get('pk')
         if oper == 'Delete':
             if Schedule.objects.get(pk=pk).creator == request.user:
+                part_list = ScheduleParticipator.objects.filter(schedule=Schedule.objects.get(pk=pk))
+                for i in part_list:
+                    i.delete()
                 Schedule.objects.get(pk=pk).delete()
             else:
                 ScheduleParticipator.objects.get(participator=GyroUser.objects.get(username=request.user.username),
@@ -184,7 +181,7 @@ def schedule_view(request, schedule_pk):
         end_time = sche_obj.end_time
         creator = request.user.username
         type = sche_obj.type.type_name
-        context = {'title': title, 'desc': desc, 'notify_day': notify_day ,
+        context = {'title': title, 'desc': desc, 'notify_day': notify_day,
                    'start_time': start_time, 'end_time': end_time, 'creator': creator, 'type': type}
         return render(request, 'User/scheduleprofile.html', context)
     else:
@@ -216,24 +213,67 @@ def test(request):
     unitlist = [unit1, unit2]
     return render(request, 'User/ui.html', {'unitlist': unitlist})
 
+
+itchat_user_dict = {}
+itchat_user_dict_reverse = {}
+
+
+@itchat.msg_register(TEXT)
+def text_reply(msg):
+    if msg['FromUserName'] == msg['ToUserName']:
+        msgdata = json.loads(msg['Text'])
+        res = {}
+        if msgdata['MessageType'] == 1:
+            res['MessageType'] = 1
+            if authenticate(msgdata['User'], msgdata['Password']):
+                res['AuthenticationResult'] = True
+                itchat_user_dict[msgdata['FromUserName']] = msgdata['User']
+                itchat_user_dict_reverse[msgdata['User']] = msgdata['FromUserName']
+            else:
+                res['AuthenticationResult'] = False
+            send(json.dumps(res), msg['FromUserName'])
+            print(itchat_user_dict)
+        elif msgdata['MessageType'] == 2:
+            res['MessageType'] = 2
+            res['Message'] = ""
+            username = itchat_user_dict[msgdata['FromUserName']]
+            user_sche = Schedule.objects.filter(creator=GyroUser.objects.get(username=username))
+            unitlist = schedule_list_to_dict(user_sche)
+            part_data = add_participate_unit(
+                ScheduleParticipator.objects.filter(participator=GyroUser.objects.get(username=username)))
+            if len(part_data['itemlist']) > 0:
+                unitlist.append(part_data)
+            for unit in unitlist:
+                res['Message'] += unit['title'] + ':'
+                for item in unit['itemlist']:
+                    res['Message'] += item.title + ','
+            send(json.dumps(res), msg['FromUserName'])
+
+
+itchat.auto_login(hotReload=True)
+client="ddd"
+
 def job():
     while True:
         print("I am working...")
-
-        @itchat.msg_register(TEXT)
-        def text_reply(msg):
-            print("get" + msg['Text'])
-            send('我是机器人', msg['ToUserName'])
-
-        itchat.auto_login(hotReload=True)
-        itchat.run()
-        date_now = datetime.datetime.now()
+        date_now = datetime.datetime.now().timestamp()
         sche_all = Schedule.objects.all()
         for sche in sche_all:
-            if date_now >= sche.end_time:
-                print('dang')
+            if date_now >= (sche.end_time - sche.notify_time).timestamp():
+                print('Delete', sche.title, sche.pk)
+                res = {'MessageType': 2}
+                res['ToUserName'] = itchat_user_dict_reverse[sche.creator.username]
+                res['Message']='任务提醒:'+sche.title
+                send(res,client)
+                sche.delete()
         time.sleep(10)
 
 
+def mytime():
+    itchat.run()
+
+
 t = threading.Thread(target=job, name='it')
+v = threading.Thread(target=mytime, name='it1')
+v.start()
 t.start()
