@@ -1,62 +1,76 @@
 {% load static %}
-<link href="{% static "User/style.css" %}" rel="stylesheet" type="text/css"/>
 <!DOCTYPE HTML>
-<html lang="en">
+<!--
+	Directive by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
 <head>
-    <title>CREATE NEW SCHEDULE</title>
+    <title>Create new schedule</title>
     <meta charset="utf-8"/>
-    <meta name="viewport" content=" initial-scale=1, user-scalable=no"/>
-    <link rel="stylesheet" href="{% static "style.css" %}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="{% static "User/assets/css/main.css" %}"/>
 </head>
 <body>
 <div id="">
     <div class="container medium">
         <header class="major last">
-            <h2>POLISH NEW SCHEDULE</h2>
+            <h2>Create new schedule</h2>
         </header>
 
         <form method="post" action="">{% csrf_token %}
             <div class="row">
-                <div class="col-6" style="left:10px">
-                    <span style="left:10px" class="text">Title:</span>
+                <div class="col-6">
+                    <span class="text">Title:</span>
                 </div>
-                <div  style="left:10px;">
-                    <input style="height: 50px;width: 900px;" type="text" name="username" placeholder="{{ username }}"/>
+                <div class="col-6">
+                    <input type="text" name="title" placeholder="{{ title }}"/>
                 </div>
                 <div class="col-6" >
-                    <span style="writing-mode: lr-tb;left:10px" class="text">Text:</span>
+                    <span style="writing-mode: lr-tb;left:10px" class="text">Description:</span>
                 </div>
-                <div  style="left:10px;">
-                    <input style="height: 500px; width: 900px;" type="text" name="password" placeholder=""/>
+                <div class="col-6">
+                    <input type="text" name="description" placeholder="{{ desc }}"/>
                 </div>
-
-                <div style="left:0px;">
+                <div class="col-6">
+                    <span class="text">notify_day:</span>
+                </div>
+                <div class="col-6">
+                    <input type="number" name="notify_day" placeholder="notice before day" min="0"/>
+                </div>
+                <div class="col-6">
+                    <span class="text">notify_hour:</span>
+                </div>
+                <div class="col-6">
+                    <input type="number" name="notify_hour" placeholder="notice before hour" min="0"/>
+                </div>
+                <div class="col-6">
+                    <span class="text">start_time:</span>
+                </div>
+                <div class="col-6">
+                    <input type="date" name="start_time" placeholder="start_time"/>
+                </div>
+                <div class="col-6">
+                    <span class="text">end_time:</span>
+                </div>
+                <div class="col-6">
+                    <input type="date" name="end_time" placeholder="end_time"/>
+                </div>
+                <div class="col-6">
+                    <span class="text">type_name:</span>
+                </div>
+                <div class="col-6">
+                    <input type="text" name="type_name" placeholder="{{ type }}"/>
+                </div>
+                <div class="col-12">
                     <ul class="actions special">
-                        {% with operation="Update" %}
-                        {% endwith %}
-                        <input type="hidden" name="pk" value="{{ foo.pk }}"/>
-                        <input type="hidden" name="operation" value="Update"/>
-                        <li><input type="submit" value="UPDATE"/></li>
+                        <li><input type="submit" value="Create"/></li>
                     </ul>
                 </div>
-
-                <div style="left:1000px;">
-                    <ul class="actions special">
-                        {% with operation="Delete" %}
-                        {% endwith %}
-                        <input type="hidden" name="pk" value="{{ foo.pk }}"/>
-                        <input type="hidden" name="operation" value="Delete"/>
-                        <li><input type="submit" value="DELETE"/></li>
-                    </ul>
-                </div>
-
             </div>
         </form>
 
-        <ul class="copyright" style="text-align: left;">
-            <li>&copy; Gyro. All rights reserved.</li>
-            <li>
-        </ul>
 
     </div>
 </div>

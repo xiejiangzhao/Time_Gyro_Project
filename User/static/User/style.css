@@ -1,5 +1,5 @@
 #datastyle{
-    color: cadetblue;
+    color: #4eb980;
     text-align: left;
     position: absolute;
     border:none;
@@ -9,7 +9,7 @@
     font-family: 'Microsoft YaHei';
 }
 #imgtest{
-    background-color: cadetblue;
+    background-color: #4eb980;
     padding-top:10px;
     border-radius:49px 0px 49px 0px;
     border-radius: 75px;

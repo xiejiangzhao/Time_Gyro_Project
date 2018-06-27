@@ -6,60 +6,81 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>Create new schedule</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{% static "User/assets/css/main.css" %}" />
-	</head>
-    <body>
-			<div id="">
-				<div class="container medium">
-					<header class="major last">
-						<h2>Create new schedule</h2>
-					</header>
+<head>
+    <title>Create new schedule</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="{% static "User/assets/css/main.css" %}"/>
+</head>
+<body>
+<div id="">
+    <div class="container medium">
+        <header class="major last">
+            <h2>Create new schedule</h2>
+        </header>
 
-					<form method="post" action="">{% csrf_token %}
-						<div class="row">
-							<div class="col-12">
-								<input type="text" name="title" placeholder="Title" />
-							</div>
-							<div class="col-12">
-								<input type="text" name="description" placeholder="Description" />
-							</div>
-                            <div class="col-12">
-								<input type="number" name="notify_day" placeholder="" />
-							</div>
-                            <div class="col-12">
-								<input type="number" name="notify_hour" placeholder="" />
-							</div>
-                            <div class="col-12">
-								<input type="date" name="start_time" placeholder="start_time" />
-							</div>
-                            <div class="col-12">
-								<input type="date" name="end_time" placeholder="end_time" />
-							</div>
-                            <div class="col-12">
-								<input type="text" name="type_name" placeholder="type_name" />
-							</div>
-							<div class="col-12">
-								<ul class="actions special">
-									<li><input type="submit" value="Create" /></li>
-								</ul>
-							</div>
-						</div>
-					</form>
+        <form method="post" action="">{% csrf_token %}
+            <div class="row">
+                <div class="col-6">
+                    <span class="text">Title:</span>
+                </div>
+                <div class="col-6">
+                    <input type="text" name="title" placeholder="Title"/>
+                </div>
+                <div class="col-6">
+                    <span class="text">Description:</span>
+                </div>
+                <div class="col-6">
+                    <input type="text" name="description" placeholder="Description"/>
+                </div>
+                <div class="col-6">
+                    <span class="text">notify_day:</span>
+                </div>
+                <div class="col-6">
+                    <input type="number" name="notify_day" placeholder="notice before day" min="0"/>
+                </div>
+                <div class="col-6">
+                    <span class="text">notify_hour:</span>
+                </div>
+                <div class="col-6">
+                    <input type="number" name="notify_hour" placeholder="notice before hour" min="0"/>
+                </div>
+                <div class="col-6">
+                    <span class="text">start_time:</span>
+                </div>
+                <div class="col-6">
+                    <input type="datetime-local" name="start_time" placeholder="start_time"/>
+                </div>
+                <div class="col-6">
+                    <span class="text">end_time:</span>
+                </div>
+                <div class="col-6">
+                    <input type="datetime-local" name="end_time" placeholder="end_time"/>
+                </div>
+                <div class="col-6">
+                    <span class="text">type_name:</span>
+                </div>
+                <div class="col-6">
+                    <input type="text" name="type_name" placeholder="type_name"/>
+                </div>
+                <div class="col-12">
+                    <ul class="actions special">
+                        <li><input type="submit" value="Create"/></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
 
 
-				</div>
-			</div>
+    </div>
+</div>
 
-		<!-- Scripts -->
-			<script src="{% static "User/assets/js/jquery.min.js" %}"></script>
-			<script src="{% static "User/assets/js/browser.min.js"%}"></script>
-			<script src="{% static "User/assets/js/breakpoints.min.js" %}"></script>
-			<script src="{% static "User/assets/js/util.js" %}"></script>
-			<script src="{% static "User/assets/js/main.js" %}"></script>
+<!-- Scripts -->
+<script src="{% static "User/assets/js/jquery.min.js" %}"></script>
+<script src="{% static "User/assets/js/browser.min.js" %}"></script>
+<script src="{% static "User/assets/js/breakpoints.min.js" %}"></script>
+<script src="{% static "User/assets/js/util.js" %}"></script>
+<script src="{% static "User/assets/js/main.js" %}"></script>
 
-	</body>
+</body>
 </html>
